@@ -11,3 +11,17 @@ A simple version of a popular game
 # Credits
 
 Based on template engine: https://github.com/imp5imp5/game_template_linux
+
+# TODO
+
+- create main menu screen
+
+- create UI for main menu screen
+
+- add ability for transitions between scenes
+
+- add transition from main menu scene to game scene
+
+- add transition back by pressing esc
+
+- design game screen
