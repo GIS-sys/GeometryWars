@@ -1,6 +1,7 @@
-#include "GameScene.h"
 #include "MainMenuScene.h"
+
 #include <cstring>
+#include "geometry_wars/scene/GameScene.h"
 
 
 MainMenuScene::MainMenuScene() {

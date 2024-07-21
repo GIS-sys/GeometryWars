@@ -1,6 +1,6 @@
 #include "Engine.h"
-#include "scene/GameScene.h"
-#include "scene/MainMenuScene.h"
+#include "geometry_wars/scene/GameScene.h"
+#include "geometry_wars/scene/MainMenuScene.h"
 #include <stdlib.h>
 #include <memory.h>
 

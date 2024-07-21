@@ -1,6 +1,6 @@
 #pragma once
 
-#include "geometry_wars/GameBuffer.h"
+#include "geometry_wars/ui/GameBuffer.h"
 #include <cstdio>
 #include <stdint.h>
 

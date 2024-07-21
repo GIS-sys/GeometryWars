@@ -1,5 +1,5 @@
 #pragma once
-#include "GameScene.h"
+#include "geometry_wars/scene/GameScene.h"
 
 
 class MainMenuScene : public GameScene {
