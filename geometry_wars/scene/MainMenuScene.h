@@ -2,12 +2,12 @@
 #include "GameScene.h"
 
 
-class MainMenuScene {
+class MainMenuScene : public GameScene {
   private:
     float color;
 
   public:
     MainMenuScene();
-    void draw(uint32_t** buffer);
+    void draw(GameBuffer&& buffer);
     void act(float dt);
 };
