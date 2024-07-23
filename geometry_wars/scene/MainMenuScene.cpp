@@ -1,8 +1,10 @@
 #include "MainMenuScene.h"
 
 #include <cstring>
-#include "geometry_wars/scene/GameScene.h"
 #include <iostream>
+#include "geometry_wars/scene/GameScene.h"
+#include "geometry_wars/ui/GameBuffer.h"
+#include "geometry_wars/ui/GOButton.h"
 
 
 MainMenuScene::MainMenuScene() {
