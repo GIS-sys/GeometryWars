@@ -6,11 +6,7 @@
 
 
 class GameScene {
-  public:
-    ~GameScene();
-    virtual void draw(GameBuffer&& buffer) = 0;
-    virtual void act(float dt) = 0;
-
+  protected:
     class keys {
       public:
         static int K_ESCAPE;
@@ -28,4 +24,9 @@ class GameScene {
     int engine_get_cursor_y();
     bool engine_is_mouse_button_pressed(int button); // 0 - left, 1 - right
     void engine_schedule_quit_game();
+
+  public:
+    ~GameScene();
+    virtual void draw(GameBuffer&& buffer) = 0;
+    virtual void act(float dt) = 0;
 };
