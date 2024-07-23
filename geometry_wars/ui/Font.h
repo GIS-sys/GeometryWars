@@ -7,7 +7,10 @@
 class Font {
   private:
     static const int FONT_BASE_HEIGHT = 16;
-    static const int FONT_BASE_WIDTH = 8;
+    static const int FONT_BASE_WIDTH = 16;
+    static const int FONT_BASE_PAD_Y = 2;
+    static const int FONT_BASE_PAD_X = 2;
+    static const int FONT_BASE_STROKE = 3;
 
   public:
     static int estimate_height(const std::string& text);
