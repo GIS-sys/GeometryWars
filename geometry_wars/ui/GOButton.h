@@ -7,6 +7,8 @@
 
 class GOButton : public GameObject {
   private:
+    static constexpr float BUTTON_PAD_X = 0.2;
+    static constexpr float BUTTON_PAD_Y = 0.2;
     std::function<void()> on_click;
     std::string label;
     float left;

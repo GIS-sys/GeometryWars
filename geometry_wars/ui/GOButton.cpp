@@ -12,7 +12,9 @@ void GOButton::draw(GameBuffer buffer) {
     buffer.draw_line(x1, y2, x2, y2, 4, color);
     buffer.draw_line(x1, y1, x1, y2, 4, color);
     buffer.draw_line(x2, y1, x2, y2, 4, color);
-    buffer.draw_text(label, x1, y1, x2, y2, color);
+    float pad_x = (x2 - x1) * BUTTON_PAD_X;
+    float pad_y = (y2 - y1) * BUTTON_PAD_Y;
+    buffer.draw_text(label, x1 + pad_x, y1 + pad_y, x2 - pad_x, y2 - pad_y, color);
 }
 
 bool GOButton::is_inside() { return true; }

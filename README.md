@@ -16,8 +16,6 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 - add font letters e,x,i and numbers
 
-- add text scale and x/y calculations
-
 - add mouse down / mouse up and buttons animations
 
 
