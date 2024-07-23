@@ -6,7 +6,7 @@
 
 void GameBuffer::memset(uint32_t value, size_t from, size_t to) {
     from = clamp(from, 0, width * height - 1);
-    to = clamp(to, 0, width * height - 1);
+    to = clamp(to, from, width * height - 1);
     std::memset(buffer + from, value, (to - from) * sizeof(uint32_t));
 }
 
@@ -18,8 +18,7 @@ void GameBuffer::set(uint32_t x, uint32_t y, uint32_t red, uint32_t green, uint3
     set(x, y, color);
 }
 void GameBuffer::set(uint32_t x, uint32_t y, uint32_t color) {
-    x = clamp(x, 0, width);
-    y = clamp(y, 0, height);
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
     buffer[x + y * width] = color;
 }
 
