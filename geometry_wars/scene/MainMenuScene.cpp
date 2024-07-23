@@ -6,8 +6,8 @@
 
 
 MainMenuScene::MainMenuScene() {
-    objects.push_back(new GOButton(0.1, 0.25, 0.8, 0.2, "Start", [this](){ this->start(); }));
-    objects.push_back(new GOButton(0.1, 0.55, 0.8, 0.2, "Exit", [this](){ this->exit(); }));
+    objects.push_back(new GOButton(0.1, 0.25, 0.8, 0.2, "Start", 200, [this](){ this->start(); }));
+    objects.push_back(new GOButton(0.1, 0.55, 0.8, 0.2, "Exit", 100, [this](){ this->exit(); }));
 }
 
 MainMenuScene::~MainMenuScene() {
@@ -15,11 +15,9 @@ MainMenuScene::~MainMenuScene() {
 }
 
 void MainMenuScene::start() {
-    std::cout << "start" << std::endl;
 }
 
 void MainMenuScene::exit() {
-    std::cout << "exit" << std::endl;
     engine_schedule_quit_game();
 }
 

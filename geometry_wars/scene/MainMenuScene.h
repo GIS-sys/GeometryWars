@@ -15,26 +15,28 @@ class GameObject {
 inline GameObject::~GameObject() {}
 class GOButton : public GameObject {
   private:
+    std::function<void()> on_click;
+    std::string label;
     float left;
     float top;
     float width;
     float height;
-    std::string label;
-    std::function<void()> on_click;
+    uint32_t color;
   public:
     ~GOButton() = default;
-    GOButton(float left, float top, float width, float height, std::string label, std::function<void()> on_click) : left(left), top(top), width(width), height(height), label(label), on_click(on_click) {}
+    GOButton(float left, float top, float width, float height, std::string label, uint32_t color, std::function<void()> on_click) : left(left), top(top), width(width), height(height), label(label), color(color), on_click(on_click) {}
     void draw(GameBuffer buffer) {
-        int step = 32;
-        for (int red = 0; red < 256; red+=step) {
-        for (int blue = 0; blue < 256; blue+=step) {
-        for (int green = 0; green < 256; green+=step) {
-            int i = green/step + blue/step*256/step + red/step*256/step*256/step;
-            //std::cout << i << " ";
-            for (int y = 5; y <=50; ++y) buffer.set(i, y, red, green, blue);
-        }
-        }
-        }
+        int x1 = left * buffer.width;
+        int x2 = x1 + width * buffer.width;
+        int y1 = top * buffer.height;
+        int y2 = y1 + height * buffer.height;
+        //buffer.draw_line(x1, y1, x2, y2, 4, color);
+        //buffer.draw_line(x1, y2, x2, y1, 4, color);
+        buffer.draw_line(x1, y1, x2, y1, 4, color);
+        buffer.draw_line(x1, y2, x2, y2, 4, color);
+        buffer.draw_line(x1, y1, x1, y2, 4, color);
+        buffer.draw_line(x2, y1, x2, y2, 4, color);
+        buffer.draw_text(label, x1, y1, x2, y2, color);
     }
     bool is_inside() { return true; }
     void click() { on_click(); }
