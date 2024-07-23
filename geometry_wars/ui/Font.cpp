@@ -45,6 +45,8 @@ std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int 
     } else if (symbol == 'J') {
     } else if (symbol == 'K') {
     } else if (symbol == 'L') {
+        buffer.draw_line(x, y, x, y + cheight, FONT_BASE_STROKE, color);
+        buffer.draw_line(x, y + cheight, x + cwidth, y + cheight, FONT_BASE_STROKE, color);
     } else if (symbol == 'M') {
     } else if (symbol == 'N') {
     } else if (symbol == 'O') {
