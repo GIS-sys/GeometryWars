@@ -30,7 +30,6 @@ void initialize()
 // dt - time elapsed since the previous update (in seconds)
 void act(float dt)
 {
-    if (is_key_pressed(VK_ESCAPE)) schedule_quit_game();
     game_scene->act(dt);
 }
 

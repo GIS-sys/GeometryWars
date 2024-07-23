@@ -6,8 +6,8 @@
 
 
 MainMenuScene::MainMenuScene() {
-    objects.push_back(new GOButton("Start", [this](){ this->start(); }));
-    objects.push_back(new GOButton("Exit", [this](){ this->exit(); }));
+    objects.push_back(new GOButton(0.1, 0.25, 0.8, 0.2, "Start", [this](){ this->start(); }));
+    objects.push_back(new GOButton(0.1, 0.55, 0.8, 0.2, "Exit", [this](){ this->exit(); }));
 }
 
 MainMenuScene::~MainMenuScene() {
@@ -23,22 +23,13 @@ void MainMenuScene::exit() {
     engine_schedule_quit_game();
 }
 
-void MainMenuScene::draw(GameBuffer&& buffer) {
-    buffer.memset(((uint32_t)color) * (256 * 256 + 256 + 1), 0, 10000);
+void MainMenuScene::draw(GameBuffer buffer) {
+    for (GameObject* go : objects) go->draw(buffer);
 }
 
 void MainMenuScene::act(float dt) {
     if (engine_is_mouse_button_pressed(0)) objects[1]->click();
-    const int COLOR_CHANGE_RATE = 100;
-    if (engine_is_key_pressed(keys::K_SPACE)) {
-        color += dt * COLOR_CHANGE_RATE;
-    } else {
-        color -= dt * COLOR_CHANGE_RATE;
-    }
-    
-    if (color > 256) {
-        color -= 256;
-    } else if (color < 0) {
-        color += 256;
+    if (engine_is_key_pressed(keys::K_ESCAPE)) {
+        exit();
     }
 }
