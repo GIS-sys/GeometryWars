@@ -6,19 +6,22 @@
 
 class Enemy : public Unit {
   public:
-    int x = 0;
-    int y = 0;
     int health = 10;
     int bounty = 13;
-    Enemy(int x, int y) : x(x), y(y) {}
+    Enemy(float x, float y) : Unit(x, y) {}
     void hit(Projectile* projectile) { health -= projectile->damage; }
     bool is_dead() const { return health <= 0; }
 };
 
 class EnemyRectangle : public Enemy {
+  private:
+    const int SIZE = 10;
   public:
     EnemyRectangle(int x, int y) : Enemy(x, y) {}
+    bool is_inside(int px, int py, int, int) {
+        return x - SIZE <= px && px <= x + SIZE && y - SIZE <= py && py <= y + SIZE;
+    }
     void draw(GameBuffer buffer, Camera* camera) {
-        buffer.draw_line(x+10, y-10, x-10, y+10, 5, 150*256);
+        buffer.draw_line(x+SIZE, y-SIZE, x-SIZE, y+SIZE, 5, 150*256);
     }
 };

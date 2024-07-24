@@ -18,9 +18,10 @@ std::vector<T> normalize_vector(const std::vector<T>& raw_vector) {
     if (raw_vector.size() == 0) return raw_vector;
     // sum
     T sum = 0;
-    for (T number : raw_vector) sum += number;
+    for (T number : raw_vector) sum += number*number;
     if (sum == 0) return  std::vector<T>(raw_vector.size(), 0);
     // normalize
+    sum = std::sqrt(sum);
     std::vector<T> result_vector;
     for (T number : raw_vector) result_vector.push_back(number / sum);
     return result_vector;

@@ -13,7 +13,7 @@
 class MainGameScene : public GameScene {
   private:
     const float ENEMY_SPAWN_PROBABILITY = 0.99;
-    const float ENEMY_SPAWN_COOLDOWN = 0.05;
+    const float ENEMY_SPAWN_COOLDOWN = 0.1;
     const int MIN_ENEMY_SPAWN_DISTANCE = 100;
 
     Camera camera;
@@ -21,8 +21,9 @@ class MainGameScene : public GameScene {
     Player player;
     std::vector<Enemy*> enemies;
     std::vector<Projectile*> projectiles;
-    GOLabel score;
+    GOLabel score_label = GOLabel(0.75, 0.05, 0.2, 0.1, (256*256+256+1) * 200);
 
+    int score_value = 0;
     float enemy_spawn_cooldown = 0;
     int prev_buffer_height = 0;
     int prev_buffer_width = 0;

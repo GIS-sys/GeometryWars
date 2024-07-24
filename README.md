@@ -22,13 +22,23 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 # TODO
 
-- design game screen
+- design game screen - add borders
+
+- allow to draw rotated and use camera (in gamebuffer methods)
 
 
 - use Color instead of all colors in functions to allow for inverse color or transparent colors
 
 - add override everywhere
 
+
+- add player's health
+
+- add new enemies
+
 - add powerups - player, enemies, projectiles etc.; player can store his own powerups, others are global and need method apply_if_applicable()
 
+
 - probably break down MainGameScene act into several methods
+
+- add real colliders

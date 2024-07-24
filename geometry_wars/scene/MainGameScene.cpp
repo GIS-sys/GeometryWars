@@ -10,13 +10,16 @@ MainGameScene::~MainGameScene() {
     for (Projectile* unit : projectiles) delete unit;
 }
 
-MainGameScene::MainGameScene() {}
+MainGameScene::MainGameScene() {
+    score_label.text = "SCORE 0";
+}
 
 void MainGameScene::draw(GameBuffer buffer) {
     prev_buffer_width = buffer.width;
     prev_buffer_height = buffer.height;
     battlefield.draw(buffer, &camera);
     player.draw(buffer, &camera);
+    score_label.draw(buffer, nullptr);
     for (Enemy* unit : enemies) unit->draw(buffer, &camera);
     for (Projectile* unit : projectiles) unit->draw(buffer, &camera);
 }
@@ -36,7 +39,9 @@ GameScene::Type MainGameScene::act(float dt) {
         enemy->move(enemy_acceleration_dt);
     }
     // move projectiles TODO
-    for (Projectile* projectile : projectiles) projectile->move({dt, dt});
+    for (Projectile* projectile : projectiles) {
+        projectile->move({dt * projectile->speed_x, dt * projectile->speed_y});
+    }
     // delete projectiles which killed enemy / hit borders TODO
     std::vector<bool> alive_projectiles = std::vector<bool>(projectiles.size(), true);
     for (int i = 0; i < projectiles.size(); ++i) {
@@ -60,7 +65,8 @@ GameScene::Type MainGameScene::act(float dt) {
     // delete enemies which are dead
     for (Enemy* enemy : enemies) {
         if (enemy->is_dead()) {
-            score.text = enemy->bounty;
+            score_value += enemy->bounty;
+            score_label.text = "SCORE " + std::to_string(score_value);
             delete enemy;
         }
     }
