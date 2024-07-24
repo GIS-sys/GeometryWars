@@ -56,6 +56,12 @@ GameScene::Type MainGameScene::act(float dt) {
     }
     filter_vector_by_mask(projectiles, alive_projectiles);
     // delete enemies which are dead
+    for (Unit* enemy : enemies) {
+        if (e->is_dead()) {
+            score.update(enemy.bounty);
+            delete enemy;
+        }
+    }
     enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Unit* e) { return e->is_dead(); }), end(enemies));
     // fire new projectiles TODO
     if (!player.is_ready_to_shoot()) {
