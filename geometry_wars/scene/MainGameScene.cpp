@@ -1,9 +1,11 @@
 #include "MainGameScene.h"
+#include <cstdlib>
+#include "geometry_wars/Utils.h"
 
 
 MainGameScene::~MainGameScene() {
-    for (GameObject* go : enemies) delete go;
-    for (GameObject* go : projectiles) delete go;
+    for (Unit* unit : enemies) delete unit;
+    for (Unit* unit : projectiles) delete unit;
 }
 
 MainGameScene::MainGameScene() {}
@@ -13,17 +15,68 @@ void MainGameScene::draw(GameBuffer buffer) {
     prev_buffer_height = buffer.height;
     battlefield.draw(&camera);
     player.draw(&camera);
-    for (GameObject* go : enemies) go->draw(buffer);
-    for (GameObject* go : projectiles) go->draw(buffer);
+    for (Uit* unit : enemies) unit->draw(buffer);
+    for (Unit* unit : projectiles) unit->draw(buffer);
 }
 
 GameScene::Type MainGameScene::act(float dt) {
     // move player TODO
+    std::pair<float, float> player_acceleration_dt;
+    if (engine_is_key_pressed(keys::K_LEFT)) player_acceleration.first -= dt;
+    if (engine_is_key_pressed(keys::K_RIGHT)) player_acceleration.first += dt;
+    if (engine_is_key_pressed(keys::K_UP)) player_acceleration.second -= dt;
+    if (engine_is_key_pressed(keys::K_DOWN)) player_acceleration.second += dt;
+    player.move(player_acceleration_dt);
     // move enemies toward player TODO
+    for (Unit* enemy : enemies) {
+        std::pair<float, float> enemy_acceleration = normalize_vector({player.x - enemy->x, player.y - enemy->y});
+        std::pair<float, float> enemy_acceleration_dt = {enemy_acceleration.first * dt, enemy_acceleration.second * dt};
+        enemy->move(enemy_acceleration_dt);
+    }
     // move projectiles TODO
+    for (Unit* projectile : projectiles) projectile.move({dt, dt});
+    // delete projectiles which killed enemy / hit borders TODO
+    std::vector<bool> alive_projectiles = std::vector<bool>(projectiles.size(), true);
+    for (int i = 0; i < projectiles.size(); ++i) {
+        Unit* projectile = projectiles[i];
+        if (battlefield.is_outside()) {
+            alive_projectiles[i] = false;
+            break;
+        }
+        for (Unit * enemy : enemies) {
+            if (enemy->is_inside(projectile->x, projectile->y)) {
+                enemy->hit(projectile);
+                alive_projectiles[i] = false;
+                break;
+            }
+        }
+    }
+    for (int i = 0; i < projectiles.size(); ++i) {
+        if (!alive_projectiles[i]) delete projectiles[i];
+    }
+    filter_vector_by_mask(projectiles, alive_projectiles);
+    // delete enemies which are dead
+    enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Unit* e) { return e->is_dead(); }), end(enemies));
     // fire new projectiles TODO
+    if (!player.is_ready_to_shoot()) {
+        player.reduce_shooting_cooldown(dt);
+    } else {
+        if (engine_is_mouse_button_pressed(0)) {
+            player.reset_shooting_cooldown();
+            projectiles.push_back(player.shoot_projectile(engine_get_cursor_x(), engine_get_cursor_y()));
+        }
+    }
     // spawn new enemies TODO
+    while (std::rand() * 1.0 / RAND_MAX > ENEMY_SPAWN_PROBABILITY) {
+        std::pair<int, int> new_enemy_pos = player.position();
+        while (distance(new_enemy_pos, player.position()) < MIN_ENEMY_SPAWN_DISTANCE) {
+            new_enemy_pos = {std::rand() % prev_buffer_width, std::rand() % prev_buffer_height};
+        }
+        enemies.push_back(new EnemyRect(new_enemy_pos));
+    }
     // move camera TODO
+    camera.move(player.x, player.y);
+    camera.fov = 50;
     // exit to main menu
     if (engine_is_key_pressed(keys::K_RETURN)) {
         return GameScene::Type::main_menu;

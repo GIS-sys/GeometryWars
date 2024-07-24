@@ -1,5 +1,6 @@
 #pragma once
 #include "geometry_wars/scene/GameScene.h"
+#include <vector>
 
 
 class MainGameScene : public GameScene {
@@ -7,8 +8,8 @@ class MainGameScene : public GameScene {
     Camera camera;
     Battlefield battlefield;
     GOPlayer player;
-    std::vector<GameObject*> enemies;
-    std::vector<GameObject*> projectiles;
+    std::vector<Unit*> enemies;
+    std::vector<Unit*> projectiles;
     GOLabel score;
 
     int prev_buffer_height = 0;
