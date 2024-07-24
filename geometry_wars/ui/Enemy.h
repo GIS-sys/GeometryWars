@@ -6,16 +6,16 @@
 
 class Enemy : public Unit {
   public:
-    int x;
-    int y;
-    int health;
-    int bounty;
-    Enemy(int x, int y);
-    void hit(Projectile* projectile);
-    bool is_dead() const;
+    int x = 0;
+    int y = 0;
+    int health = 10;
+    int bounty = 13;
+    Enemy(int x, int y) : x(x), y(y) {}
+    void hit(Projectile* projectile) { health -= projectile->damage; }
+    bool is_dead() const { return health <= 0; }
 };
 
 class EnemyRectangle : public Enemy {
   public:
-    EnemyRectangle(int x, int y);
+    EnemyRectangle(int x, int y) : Enemy(x, y) {}
 };

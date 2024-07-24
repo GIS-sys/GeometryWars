@@ -4,4 +4,7 @@
 
 
 class Projectile : public Unit {
+  public:
+    int damage;
+    Projectile(int damage) : damage(damage) {}
 };
