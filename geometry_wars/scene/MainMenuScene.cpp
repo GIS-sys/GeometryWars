@@ -17,6 +17,7 @@ MainMenuScene::~MainMenuScene() {
 }
 
 void MainMenuScene::start() {
+    need_transition_to_start = true;
 }
 
 void MainMenuScene::exit() {
@@ -29,7 +30,7 @@ void MainMenuScene::draw(GameBuffer buffer) {
     for (GameObject* go : objects) go->draw(buffer);
 }
 
-void MainMenuScene::act(float dt) {
+GameScene::Type MainMenuScene::act(float dt) {
     // get mouse data
     int cx = engine_get_cursor_x();
     int cy = engine_get_cursor_y();
@@ -62,4 +63,7 @@ void MainMenuScene::act(float dt) {
     // remember new button states
     prev_mleft = mleft;
     prev_mright = mright;
+    // transition if necessary
+    if (need_transition_to_start) return GameScene::Type::main_game;
+    return GameScene::Type::none;
 }

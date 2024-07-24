@@ -9,6 +9,7 @@ class MainMenuScene : public GameScene {
     std::vector<GameObject*> objects;
     bool prev_mleft = 0; // previous left mouse button state
     bool prev_mright = 0; // previous right mouse button state
+    bool need_transition_to_start = false;
     int prev_buffer_width = 0;
     int prev_buffer_height = 0;
     void start();
@@ -18,5 +19,5 @@ class MainMenuScene : public GameScene {
     ~MainMenuScene();
     MainMenuScene();
     void draw(GameBuffer buffer);
-    void act(float dt);
+    GameScene::Type act(float dt);
 };

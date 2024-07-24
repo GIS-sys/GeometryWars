@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "geometry_wars/scene/GameScene.h"
 #include "geometry_wars/scene/MainMenuScene.h"
+#include "geometry_wars/scene/MainGameScene.h"
 #include <stdlib.h>
 #include <memory.h>
 
@@ -30,7 +31,18 @@ void initialize()
 // dt - time elapsed since the previous update (in seconds)
 void act(float dt)
 {
-    game_scene->act(dt);
+    GameScene::Type new_game_scene_type = game_scene->act(dt);
+    if (new_game_scene_type != GameScene::Type::none) {
+        delete game_scene;
+        switch (new_game_scene_type) {
+          case GameScene::Type::main_menu:
+            game_scene = new MainMenuScene();
+            break;
+          case GameScene::Type::main_game:
+            game_scene = new MainGameScene();
+            break;
+        };
+    }
 }
 
 // fill buffer in this function

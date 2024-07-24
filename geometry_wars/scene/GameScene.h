@@ -26,7 +26,13 @@ class GameScene {
     void engine_schedule_quit_game();
 
   public:
+    enum class Type {
+        main_menu,
+        main_game,
+        none
+    };
+
     ~GameScene();
     virtual void draw(GameBuffer buffer) = 0;
-    virtual void act(float dt) = 0;
+    virtual Type act(float dt) = 0;
 };
