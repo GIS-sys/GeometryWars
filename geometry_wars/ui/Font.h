@@ -15,6 +15,6 @@ class Font {
   public:
     static int estimate_height(const std::string& text);
     static int estimate_width(const std::string& text);
-    static void draw_text(GameBuffer& buffer, const std::string& text, int x, int y, float scale, uint32_t color);
-    static std::pair<int, int> draw_char(GameBuffer& buffer, char symbol, int x, int y, float scale, uint32_t color);
+    static void draw_text(GameBuffer& buffer, const std::string& text, int x, int y, float scale, Color color);
+    static std::pair<int, int> draw_char(GameBuffer& buffer, char symbol, int x, int y, float scale, Color color);
 };

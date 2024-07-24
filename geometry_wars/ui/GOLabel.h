@@ -13,9 +13,9 @@ class GOLabel : public GameObject {
     float top;
     float width;
     float height;
-    uint32_t color;
+    Color color;
 
-    GOLabel(float left, float top, float width, float height, uint32_t color) : left(left), top(top), width(width), height(height), color(color) {}
+    GOLabel(float left, float top, float width, float height, Color color) : left(left), top(top), width(width), height(height), color(color) {}
 
     void draw(GameBuffer buffer, Camera*) {
         int x1 = left * buffer.width;

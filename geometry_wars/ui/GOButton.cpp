@@ -1,7 +1,7 @@
 #include "geometry_wars/ui/GOButton.h"
 #include <iostream>
 
-GOButton::GOButton(float left, float top, float width, float height, std::string label, uint32_t color, std::function<void()> on_click) : left(left), top(top), width(width), height(height), label(label), color(color), on_click(on_click) {}
+GOButton::GOButton(float left, float top, float width, float height, std::string label, Color color, std::function<void()> on_click) : left(left), top(top), width(width), height(height), label(label), color(color), on_click(on_click) {}
 
 void GOButton::draw(GameBuffer buffer, Camera*) {
     int x1 = left * buffer.width;

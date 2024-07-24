@@ -1,5 +1,6 @@
 #pragma once
 
+#include "geometry_wars/ui/Color.h"
 #include <cstdio>
 #include <cstring>
 #include <stdint.h>
@@ -18,8 +19,7 @@ class GameBuffer {
     ~GameBuffer() = default;
 
     void memset(uint32_t value, size_t from, size_t to);
-    void set(uint32_t x, uint32_t y, uint32_t red, uint32_t green, uint32_t blue);
-    void set(uint32_t x, uint32_t y, uint32_t color);
-    void draw_line(int x1, int x2, int y1, int y2, int width, uint32_t color);
-    void draw_text(const std::string& text, int left, int top, int right, int bottom, uint32_t color);
+    void set(uint32_t x, uint32_t y, Color color);
+    void draw_line(int x1, int x2, int y1, int y2, int width, Color color);
+    void draw_text(const std::string& text, int left, int top, int right, int bottom, Color color);
 };

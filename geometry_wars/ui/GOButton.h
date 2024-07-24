@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <string>
+#include "geometry_wars/ui/Color.h"
 #include "geometry_wars/ui/GameObject.h"
 #include "geometry_wars/ui/Camera.h"
 
@@ -17,10 +18,10 @@ class GOButton : public GameObject {
     float top;
     float width;
     float height;
-    uint32_t color;
+    Color color;
   public:
     ~GOButton() = default;
-    GOButton(float left, float top, float width, float height, std::string label, uint32_t color, std::function<void()> on_click);
+    GOButton(float left, float top, float width, float height, std::string label, Color color, std::function<void()> on_click);
     void draw(GameBuffer buffer, Camera* camera);
     bool is_inside(int x, int y, int buffer_width, int buffer_height);
     void mouse_outside(bool lmb_pressed, bool rmb_pressed);

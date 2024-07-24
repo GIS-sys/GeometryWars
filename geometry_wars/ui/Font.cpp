@@ -7,7 +7,7 @@ int Font::estimate_height(const std::string& text) { return FONT_BASE_HEIGHT + 2
 
 int Font::estimate_width(const std::string& text) { return (FONT_BASE_WIDTH + 2 * FONT_BASE_PAD_X) * text.size(); }
 
-void Font::draw_text(GameBuffer& buffer, const std::string& text, int x, int y, float scale, uint32_t color) {
+void Font::draw_text(GameBuffer& buffer, const std::string& text, int x, int y, float scale, Color color) {
     for (char symbol : text) {
         std::pair<int, int> delta = draw_char(buffer, symbol, x, y, scale, color);
         x += delta.first;
@@ -15,7 +15,7 @@ void Font::draw_text(GameBuffer& buffer, const std::string& text, int x, int y, 
     }
 }
 
-std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int y, float scale, uint32_t color) {
+std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int y, float scale, Color color) {
     // TODO
     x += FONT_BASE_PAD_X;
     y += FONT_BASE_PAD_Y;
