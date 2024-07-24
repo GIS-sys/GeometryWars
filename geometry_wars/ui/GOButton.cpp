@@ -3,7 +3,7 @@
 
 GOButton::GOButton(float left, float top, float width, float height, std::string label, uint32_t color, std::function<void()> on_click) : left(left), top(top), width(width), height(height), label(label), color(color), on_click(on_click) {}
 
-void GOButton::draw(GameBuffer buffer) {
+void GOButton::draw(GameBuffer buffer, Camera*) {
     int x1 = left * buffer.width;
     int x2 = x1 + width * buffer.width;
     int y1 = top * buffer.height;

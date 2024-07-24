@@ -27,7 +27,7 @@ void MainMenuScene::exit() {
 void MainMenuScene::draw(GameBuffer buffer) {
     prev_buffer_width = buffer.width;
     prev_buffer_height = buffer.height;
-    for (GameObject* go : objects) go->draw(buffer);
+    for (GameObject* go : objects) go->draw(buffer, nullptr);
 }
 
 GameScene::Type MainMenuScene::act(float dt) {

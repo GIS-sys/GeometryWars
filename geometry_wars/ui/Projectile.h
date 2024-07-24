@@ -1,7 +1,7 @@
 #pragma once
 
-#include "geometry_wars/ui/GameObject.h"
+#include "geometry_wars/ui/Unit.h"
 
 
-class Projectile : public GameObject {
+class Projectile : public Unit {
 };

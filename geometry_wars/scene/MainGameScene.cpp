@@ -30,7 +30,7 @@ GameScene::Type MainGameScene::act(float dt) {
     player.move(player_acceleration_dt);
     // move enemies toward player TODO
     for (Enemy* enemy : enemies) {
-        std::pair<float, float> enemy_acceleration = normalize_vector({player.x - enemy->x, player.y - enemy->y});
+        std::pair<float, float> enemy_acceleration = normalize_pair<float>({player.x - enemy->x, player.y - enemy->y});
         std::pair<float, float> enemy_acceleration_dt = {enemy_acceleration.first * dt, enemy_acceleration.second * dt};
         enemy->move(enemy_acceleration_dt);
     }
@@ -74,15 +74,19 @@ GameScene::Type MainGameScene::act(float dt) {
         }
     }
     // spawn new enemies TODO
-    while (std::rand() * 1.0 / RAND_MAX > ENEMY_SPAWN_PROBABILITY) {
-        std::pair<int, int> new_enemy_pos = player.position();
-        while (distance(new_enemy_pos, player.position()) < MIN_ENEMY_SPAWN_DISTANCE) {
-            new_enemy_pos = {std::rand() % prev_buffer_width, std::rand() % prev_buffer_height};
+    enemy_spawn_cooldown -= dt;
+    while (enemy_spawn_cooldown < 0) {
+        enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
+        while (std::rand() * 1.0 / RAND_MAX > ENEMY_SPAWN_PROBABILITY) {
+            std::pair<int, int> new_enemy_pos = player.position();
+            while (distance(new_enemy_pos, player.position()) < MIN_ENEMY_SPAWN_DISTANCE) {
+                new_enemy_pos = {std::rand() % prev_buffer_width, std::rand() % prev_buffer_height};
+            }
+            enemies.push_back(new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second));
         }
-        enemies.push_back(new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second));
     }
     // move camera TODO
-    camera.move(player.x, player.y);
+    camera.center_on(player.x, player.y);
     camera.fov = 50;
     // exit to main menu
     if (engine_is_key_pressed(keys::K_RETURN)) {
