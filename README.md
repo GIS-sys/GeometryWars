@@ -22,12 +22,12 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 # TODO
 
+- use Color instead of all colors in functions to allow for inverse color or transparent colors - TEST FOR ALPHA, ADD INVERSE, REPLACE EVERYWHERE FOR RGB
+
+
 - design game screen - add borders
 
 - allow to draw rotated and use camera (in gamebuffer methods)
-
-
-- use Color instead of all colors in functions to allow for inverse color or transparent colors
 
 - add override everywhere
 
