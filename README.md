@@ -14,8 +14,6 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 # TODO
 
-- add mouse down / mouse up and buttons animations
-
 
 - add ability for transitions between scenes
 
@@ -28,3 +26,5 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 
 - use Color instead of all colors in functions to allow for inverse color or transparent colors
+
+- add override everywhere

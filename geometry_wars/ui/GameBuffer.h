@@ -7,8 +7,10 @@
 
 
 class GameBuffer {
-  public:
+  private:
     uint32_t* buffer;
+
+  public:
     std::size_t height;
     std::size_t width;
 
