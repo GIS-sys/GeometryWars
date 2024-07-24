@@ -2,6 +2,14 @@
 
 A simple version of a popular game
 
+# Controls
+
+0. on main menu screen select either EXIT (closes window; also you can press ESC) or START (starts the game)
+
+1. on main game screen press ENTER at any time to return to main menu screen
+
+2. TODO
+
 # Build
 
 0. Install required tools: `sudo apt install g++ cmake libx11-dev`
@@ -13,14 +21,6 @@ A simple version of a popular game
 Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 # TODO
-
-
-- add ability for transitions between scenes
-
-- add transition from main menu scene to game scene
-
-- add transition back by pressing esc
-
 
 - design game screen
 
