@@ -56,9 +56,9 @@ GameScene::Type MainMenuScene::act(float dt) {
             if (!mright) go->mouse_release(1);
         }
     }
-    // exit
-    if (engine_is_key_pressed(keys::K_ESCAPE)) {
-        exit();
+    // start if pressed enter
+    if (engine_is_key_pressed(keys::K_RETURN)) {
+        start();
     }
     // remember new button states
     prev_mleft = mleft;

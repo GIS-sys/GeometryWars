@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "geometry_wars/Utils.h"
 #include <algorithm>
+#include <iostream>
 
 
 MainGameScene::~MainGameScene() {
@@ -55,7 +56,7 @@ GameScene::Type MainGameScene::act(float dt) {
     for (int i = 0; i < projectiles.size(); ++i) {
         if (!alive_projectiles[i]) delete projectiles[i];
     }
-    filter_vector_by_mask(projectiles, alive_projectiles);
+    projectiles = filter_vector_by_mask(projectiles, alive_projectiles);
     // delete enemies which are dead
     for (Enemy* enemy : enemies) {
         if (enemy->is_dead()) {
@@ -77,7 +78,7 @@ GameScene::Type MainGameScene::act(float dt) {
     enemy_spawn_cooldown -= dt;
     while (enemy_spawn_cooldown < 0) {
         enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
-        while (std::rand() * 1.0 / RAND_MAX > ENEMY_SPAWN_PROBABILITY) {
+        if (std::rand() * 1.0 / RAND_MAX < ENEMY_SPAWN_PROBABILITY) {
             std::pair<int, int> new_enemy_pos = player.position();
             while (distance(new_enemy_pos, player.position()) < MIN_ENEMY_SPAWN_DISTANCE) {
                 new_enemy_pos = {std::rand() % prev_buffer_width, std::rand() % prev_buffer_height};
@@ -86,10 +87,12 @@ GameScene::Type MainGameScene::act(float dt) {
         }
     }
     // move camera TODO
+    camera.buffer_width = prev_buffer_width;
+    camera.buffer_height = prev_buffer_height;
+    camera.fov = 0.5;
     camera.center_on(player.x, player.y);
-    camera.fov = 50;
     // exit to main menu
-    if (engine_is_key_pressed(keys::K_RETURN)) {
+    if (engine_is_key_pressed(keys::K_ESCAPE)) {
         return GameScene::Type::main_menu;
     }
     return GameScene::Type::none;

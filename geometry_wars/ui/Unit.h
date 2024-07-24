@@ -5,8 +5,12 @@
 
 class Unit : public GameObject {
   public:
-    int x = 0;
-    int y = 0;
-    virtual void move(std::pair<int, int> acceleration_dt) { x += acceleration_dt.first; y += acceleration_dt.second; }
+    float x = 0;
+    float y = 0;
+    int speed_magnitude = 100;
+    virtual void move(std::pair<float, float> acceleration_dt) {
+        x += acceleration_dt.first * speed_magnitude;
+        y += acceleration_dt.second * speed_magnitude;
+    }
     std::pair<int, int> position() const { return {x, y}; }
 };

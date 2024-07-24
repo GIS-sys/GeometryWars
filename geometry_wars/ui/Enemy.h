@@ -18,4 +18,7 @@ class Enemy : public Unit {
 class EnemyRectangle : public Enemy {
   public:
     EnemyRectangle(int x, int y) : Enemy(x, y) {}
+    void draw(GameBuffer buffer, Camera* camera) {
+        buffer.draw_line(x+10, y-10, x-10, y+10, 5, 150*256);
+    }
 };

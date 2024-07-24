@@ -4,11 +4,11 @@ A simple version of a popular game
 
 # Controls
 
-0. on main menu screen select either EXIT (closes window; also you can press ESC) or START (starts the game)
+0. on main menu screen press one of th ebuttons: either EXIT (closes the game) or START (starts the game; also you can just press ENTER)
 
-1. on main game screen press ENTER at any time to return to main menu screen
+1. on main game screen press ESCAPE at any time to return to main menu screen
 
-2. TODO
+2. move around using arrows on keyboard, shoot using mouse movement and left button
 
 # Build
 
