@@ -13,5 +13,6 @@ class Unit : public GameObject {
         x += acceleration_dt.first * speed_magnitude;
         y += acceleration_dt.second * speed_magnitude;
     }
-    std::pair<int, int> position() const { return {x, y}; }
+    std::pair<float, float> position() const { return {x, y}; }
+    void set_position(std::pair<float, float> pos) { x = pos.first; y = pos.second; }
 };

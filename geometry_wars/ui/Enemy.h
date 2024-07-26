@@ -18,7 +18,7 @@ class EnemyRectangle : public Enemy {
     const int SIZE = 10;
   public:
     EnemyRectangle(int x, int y) : Enemy(x, y) {}
-    bool is_inside(int px, int py, int, int) {
+    bool is_inside(float px, float py, int, int) {
         return x - SIZE <= px && px <= x + SIZE && y - SIZE <= py && py <= y + SIZE;
     }
     void draw(GameBuffer buffer, Camera* camera) {

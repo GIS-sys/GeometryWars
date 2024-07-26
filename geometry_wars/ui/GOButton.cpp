@@ -17,7 +17,7 @@ void GOButton::draw(GameBuffer buffer, Camera*) {
     buffer.draw_text(label, x1 + pad_x, y1 + pad_y, x2 - pad_x, y2 - pad_y, color);
 }
 
-bool GOButton::is_inside(int x, int y, int buffer_width, int buffer_height) {
+bool GOButton::is_inside(float x, float y, int buffer_width, int buffer_height) {
     if (buffer_width == 0 || buffer_height == 0) return false;
     float fx = 1.0 * x / buffer_width;
     float fy = 1.0 * y / buffer_height;

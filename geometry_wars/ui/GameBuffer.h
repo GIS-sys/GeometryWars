@@ -1,6 +1,7 @@
 #pragma once
 
 #include "geometry_wars/ui/Color.h"
+#include "geometry_wars/ui/Camera.h"
 #include <cstdio>
 #include <cstring>
 #include <stdint.h>

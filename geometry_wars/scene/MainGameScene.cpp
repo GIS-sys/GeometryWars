@@ -32,6 +32,8 @@ GameScene::Type MainGameScene::act(float dt) {
     if (engine_is_key_pressed(keys::K_UP)) player_acceleration_dt.second -= dt;
     if (engine_is_key_pressed(keys::K_DOWN)) player_acceleration_dt.second += dt;
     player.move(player_acceleration_dt);
+    // snap player inside battlefield
+    player.set_position(battlefield.snap_inside(player.position()));
     // move enemies toward player 
     for (Enemy* enemy : enemies) {
         std::pair<float, float> enemy_acceleration = normalize_pair<float>({player.x - enemy->x, player.y - enemy->y});
@@ -85,9 +87,9 @@ GameScene::Type MainGameScene::act(float dt) {
     while (enemy_spawn_cooldown < 0) {
         enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
         if (std::rand() * 1.0 / RAND_MAX < ENEMY_SPAWN_PROBABILITY) {
-            std::pair<int, int> new_enemy_pos = player.position();
+            std::pair<float, float> new_enemy_pos = player.position();
             while (distance(new_enemy_pos, player.position()) < MIN_ENEMY_SPAWN_DISTANCE) {
-                new_enemy_pos = {std::rand() % prev_buffer_width, std::rand() % prev_buffer_height};
+                new_enemy_pos = {std::rand() % battlefield.get_width(), std::rand() % battlefield.get_height()};
             }
             enemies.push_back(new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second));
         }
