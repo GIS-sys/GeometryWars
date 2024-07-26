@@ -13,9 +13,9 @@ void GameBuffer::memset(uint32_t value, size_t from, size_t to) {
 void GameBuffer::set(uint32_t x, uint32_t y, Color color, const Camera* camera) {
     // apply camera
     if (camera) {
-        std::cout << camera->corner_x << " " << camera->corner_y << std::endl;
-        x = (x - camera->corner_x) / camera->fov;
-        y = (y - camera->corner_y) / camera->fov;
+        auto new_coordinates = camera->convert({x, y});
+        x = new_coordinates.first;
+        y = new_coordinates.second;
     }
     // draw resulting x, y point
     if (x < 0 || x >= width || y < 0 || y >= height) return;

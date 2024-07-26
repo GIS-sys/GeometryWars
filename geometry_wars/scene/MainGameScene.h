@@ -13,7 +13,7 @@
 class MainGameScene : public GameScene {
   private:
     const float ENEMY_SPAWN_PROBABILITY = 0.99;
-    const float ENEMY_SPAWN_COOLDOWN = 0.1;
+    const float ENEMY_SPAWN_COOLDOWN = 20; //0.1;
     const int MIN_ENEMY_SPAWN_DISTANCE = 100;
 
     Camera camera;

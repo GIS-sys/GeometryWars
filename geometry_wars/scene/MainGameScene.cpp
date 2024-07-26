@@ -79,7 +79,8 @@ GameScene::Type MainGameScene::act(float dt) {
     } else {
         if (engine_is_mouse_button_pressed(0)) {
             player.reset_shooting_cooldown();
-            projectiles.push_back(player.shoot_projectile(engine_get_cursor_x(), engine_get_cursor_y()));
+            auto [cx, cy] = camera.anti_convert({engine_get_cursor_x(), engine_get_cursor_y()});
+            projectiles.push_back(player.shoot_projectile(cx, cy));
         }
     }
     // spawn new enemies 
