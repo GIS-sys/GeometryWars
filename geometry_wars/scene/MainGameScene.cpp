@@ -20,6 +20,7 @@ void MainGameScene::draw(GameBuffer buffer) {
     battlefield.draw(buffer, &camera);
     player.draw(buffer, &camera);
     score_label.draw(buffer, nullptr);
+    health_label.draw(buffer, nullptr);
     for (Enemy* unit : enemies) unit->draw(buffer, &camera);
     for (Projectile* unit : projectiles) unit->draw(buffer, &camera);
 }
@@ -100,6 +101,8 @@ GameScene::Type MainGameScene::act(float dt) {
     camera.buffer_height = prev_buffer_height;
     camera.fov = 0.5;
     camera.center_on(player.x - Camera::LAG * player.get_speed_x(), player.y - Camera::LAG * player.get_speed_y());
+    // update health
+    health_label.text = "HEALTH " + std::to_string(player.health);
     // exit to main menu
     if (engine_is_key_pressed(keys::K_ESCAPE)) {
         return GameScene::Type::main_menu;

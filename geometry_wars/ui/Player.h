@@ -10,13 +10,13 @@ class Player : public Unit {
     const float WEAPON_COOLDOWN = 0.3;
     const float WEAPON_PROJECTILE_SPEED = 3;
     const float MAX_SPEED = 0.25;
-    int health = 100;
     float acceleration_magnitude = 1;
     float weapon_cooldown_rest = 0;
     float speed_x = 0;
     float speed_y = 0;
 
   public:
+    int health = 100;
     Player() : Unit(0, 0) {}
     bool is_ready_to_shoot() const { return weapon_cooldown_rest <= 0; }
     void reset_shooting_cooldown() { weapon_cooldown_rest = WEAPON_COOLDOWN; }

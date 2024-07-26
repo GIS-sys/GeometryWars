@@ -21,7 +21,8 @@ class MainGameScene : public GameScene {
     Player player;
     std::vector<Enemy*> enemies;
     std::vector<Projectile*> projectiles;
-    GOLabel score_label = GOLabel(0.75, 0.05, 0.2, 0.1, (256*256+256+1) * 200);
+    GOLabel health_label = GOLabel(0.05, 0.05, 0.3, 0.1, (256*256+256+1) * 200);
+    GOLabel score_label = GOLabel(0.65, 0.05, 0.3, 0.1, (256*256+256+1) * 200);
 
     int score_value = 0;
     float enemy_spawn_cooldown = 0;
