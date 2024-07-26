@@ -7,10 +7,11 @@
 
 class Enemy : public Unit {
   public:
-    int health = 10;
-    int bounty = 13;
-    float dps = 100;
-    Enemy(float x, float y) : Unit(x, y) {}
+    int initial_health;
+    int health;
+    int bounty;
+    float dps;
+    Enemy(float x, float y, int initial_health=10, int bounty=13, int dps=100) : Unit(x, y), initial_health(initial_health), health(initial_health), bounty(bounty), dps(dps) {}
     void hit(Projectile* projectile) { health -= projectile->damage; }
     bool is_dead() const { return health <= 0; }
 };
@@ -30,11 +31,25 @@ class EnemyRectangle : public Enemy {
 };
 
 
+class EnemyCircle : public Enemy {
+  private:
+    const int SIZE = 10;
+  public:
+    EnemyCircle(int x, int y) : Enemy(x, y) {}
+    bool is_inside(float px, float py, int, int) override {
+        return (x - px) * (x - px) + (y - py) * (y - py) <= SIZE * SIZE;
+    }
+    void draw(GameBuffer buffer, Camera* camera) override {
+        buffer.draw_circle(x, y, SIZE, 150*256, camera);
+    }
+};
+
+
 class EnemySpawner {
   private:
     // spawner - have no time to move to separate class
-    const float ENEMY_SPAWN_PROBABILITY = 0.99;
-    const float ENEMY_SPAWN_COOLDOWN = 0.1;
+    const float ENEMY_SPAWN_PROBABILITY = 0.2;
+    const float ENEMY_SPAWN_COOLDOWN = 0.2;
     const int MIN_ENEMY_SPAWN_DISTANCE = 100;
     float enemy_spawn_cooldown = 0;
 
@@ -48,11 +63,22 @@ class EnemySpawner {
         while (enemy_spawn_cooldown < 0) {
             enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
             if (std::rand() * 1.0 / RAND_MAX < ENEMY_SPAWN_PROBABILITY) {
+                // position
                 std::pair<float, float> new_enemy_pos = player_position;
                 while (distance(new_enemy_pos, player_position) < MIN_ENEMY_SPAWN_DISTANCE) {
                     new_enemy_pos = {std::rand() % battlefield.get_width(), std::rand() % battlefield.get_height()};
                 }
-                return new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second);
+                // enemy type
+                Enemy* new_enemy = nullptr;
+                float random_type = (std::rand() * 1.0 / RAND_MAX);
+                if (0 <= random_type && random_type <= 0.5) {
+                    new_enemy = new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second);
+                } else {
+                    new_enemy = new EnemyCircle(new_enemy_pos.first, new_enemy_pos.second);
+                }
+                // vary parameters
+                new_enemy->speed_magnitude *= (std::rand() * 2.0 / RAND_MAX);
+                return new_enemy;
             }
         }
         return nullptr;
