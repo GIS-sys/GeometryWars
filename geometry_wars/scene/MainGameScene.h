@@ -12,10 +12,7 @@
 
 class MainGameScene : public GameScene {
   private:
-    const float ENEMY_SPAWN_PROBABILITY = 0.99;
-    const float ENEMY_SPAWN_COOLDOWN = 20; //0.1;
-    const int MIN_ENEMY_SPAWN_DISTANCE = 100;
-
+    EnemySpawner enemy_spawner;
     Camera camera;
     Battlefield battlefield;
     Player player;
@@ -30,7 +27,6 @@ class MainGameScene : public GameScene {
 
     int score_value = 0;
     int high_score_value = 0;
-    float enemy_spawn_cooldown = 0;
     int prev_buffer_height = 0;
     int prev_buffer_width = 0;
     bool is_game_over = false;

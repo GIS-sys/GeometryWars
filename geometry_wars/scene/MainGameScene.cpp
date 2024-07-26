@@ -19,11 +19,11 @@ void MainGameScene::restart() {
     player = Player();
     for (Enemy* unit : enemies) delete unit;
     enemies.clear();
+    enemy_spawner.restart();
     for (Projectile* unit : projectiles) delete unit;
     projectiles.clear();
     score_value = 0;
     // high_score_value = 0;
-    enemy_spawn_cooldown = 0;
     is_game_over = false;
 }
 
@@ -134,18 +134,9 @@ GameScene::Type MainGameScene::act(float dt) {
             projectiles.push_back(player.shoot_projectile(cx, cy));
         }
     }
-    // spawn new enemies 
-    enemy_spawn_cooldown -= dt;
-    while (enemy_spawn_cooldown < 0) {
-        enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
-        if (std::rand() * 1.0 / RAND_MAX < ENEMY_SPAWN_PROBABILITY) {
-            std::pair<float, float> new_enemy_pos = player.position();
-            while (distance(new_enemy_pos, player.position()) < MIN_ENEMY_SPAWN_DISTANCE) {
-                new_enemy_pos = {std::rand() % battlefield.get_width(), std::rand() % battlefield.get_height()};
-            }
-            enemies.push_back(new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second));
-        }
-    }
+    // spawn new enemies
+    Enemy* new_enemy = enemy_spawner.spawn(dt, score_value, player.position(), battlefield);
+    if (new_enemy) enemies.push_back(new_enemy);
     // move camera 
     camera.buffer_width = prev_buffer_width;
     camera.buffer_height = prev_buffer_height;
