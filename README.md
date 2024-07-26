@@ -28,9 +28,6 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux. Engin
 
 # TODO
 
-- add new weapons
-
-
 - add powerups - player, enemies, projectiles etc.; player can store his own powerups, others are global and need method apply_if_applicable()
 
 - add color alpha and inverse

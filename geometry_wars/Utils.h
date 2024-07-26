@@ -46,3 +46,5 @@ std::vector<T> filter_vector_by_mask(const std::vector<T>& source, const std::ve
     }
     return result;
 }
+
+std::pair<float, float> rotate_pair(std::pair<float, float> vector, float degrees);

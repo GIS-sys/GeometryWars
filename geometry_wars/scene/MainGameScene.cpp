@@ -132,7 +132,8 @@ GameScene::Type MainGameScene::act(float dt) {
         if (engine_is_mouse_button_pressed(0)) {
             player.reset_shooting_cooldown();
             auto [cx, cy] = camera.anti_convert({engine_get_cursor_x(), engine_get_cursor_y()});
-            projectiles.push_back(player.shoot_projectile(cx, cy));
+            std::vector<Projectile*> new_projectiles = player.shoot_projectile(cx, cy, score_value);
+            projectiles.insert(projectiles.end(), new_projectiles.begin(), new_projectiles.end());
         }
     }
     // spawn new enemies
