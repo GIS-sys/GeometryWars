@@ -11,7 +11,20 @@ MainGameScene::~MainGameScene() {
 }
 
 MainGameScene::MainGameScene() : battlefield(600, 400) {
-    score_label.text = "SCORE 0";
+}
+
+void MainGameScene::restart() {
+    camera = Camera();
+    battlefield = Battlefield(600, 400);
+    player = Player();
+    for (Enemy* unit : enemies) delete unit;
+    enemies.clear();
+    for (Projectile* unit : projectiles) delete unit;
+    projectiles.clear();
+    score_value = 0;
+    // high_score_value = 0;
+    enemy_spawn_cooldown = 0;
+    is_game_over = false;
 }
 
 void MainGameScene::draw(GameBuffer buffer) {
@@ -23,9 +36,30 @@ void MainGameScene::draw(GameBuffer buffer) {
     health_label.draw(buffer, nullptr);
     for (Enemy* unit : enemies) unit->draw(buffer, &camera);
     for (Projectile* unit : projectiles) unit->draw(buffer, &camera);
+
+    if (is_game_over) {
+        game_over_label.text = "GAME OVER";
+        game_over_current_score.text = "SCORE " + std::to_string(score_value);
+        game_over_high_score.text = "HIGH SCORE " + std::to_string(high_score_value);
+        game_over_label.draw(buffer, nullptr);
+        game_over_current_score.draw(buffer, nullptr);
+        game_over_high_score.draw(buffer, nullptr);
+    }
 }
 
 GameScene::Type MainGameScene::act(float dt) {
+    // exit to main menu
+    if (engine_is_key_pressed(keys::K_ESCAPE)) {
+        return GameScene::Type::main_menu;
+    }
+    // if game is over - display label
+    if (is_game_over) {
+        if (engine_is_key_pressed(keys::K_RETURN)) {
+            high_score_value = std::max(score_value, high_score_value);
+            restart();
+        }
+        return GameScene::Type::none;
+    }
     // move player 
     std::pair<float, float> player_acceleration_dt;
     if (engine_is_key_pressed(keys::K_LEFT)) player_acceleration_dt.first -= dt;
@@ -69,9 +103,9 @@ GameScene::Type MainGameScene::act(float dt) {
     for (Enemy* enemy : enemies) {
         if (enemy->is_dead()) {
             score_value += enemy->bounty;
-            score_label.text = "SCORE " + std::to_string(score_value);
         }
     }
+    score_label.text = "SCORE " + std::to_string(score_value);
     enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Enemy* e) {
         if (e->is_dead()) {
             delete e;
@@ -84,6 +118,11 @@ GameScene::Type MainGameScene::act(float dt) {
         if (enemy->is_inside(player.x, player.y, prev_buffer_width, prev_buffer_height)) {
             player.update_health(-enemy->dps * dt);
         }
+    }
+    // if player is dead - set game over flag
+    if (player.get_health() <= 0) {
+        is_game_over = true;
+        return GameScene::Type::none;
     }
     // fire new projectiles 
     if (!player.is_ready_to_shoot()) {
@@ -114,9 +153,5 @@ GameScene::Type MainGameScene::act(float dt) {
     camera.center_on(player.x - Camera::LAG * player.get_speed_x(), player.y - Camera::LAG * player.get_speed_y());
     // update health
     health_label.text = "HEALTH " + std::to_string((int)player.get_health());
-    // exit to main menu
-    if (engine_is_key_pressed(keys::K_ESCAPE)) {
-        return GameScene::Type::main_menu;
-    }
     return GameScene::Type::none;
 }

@@ -8,7 +8,7 @@ class Enemy : public Unit {
   public:
     int health = 10;
     int bounty = 13;
-    float dps = 10;
+    float dps = 100;
     Enemy(float x, float y) : Unit(x, y) {}
     void hit(Projectile* projectile) { health -= projectile->damage; }
     bool is_dead() const { return health <= 0; }

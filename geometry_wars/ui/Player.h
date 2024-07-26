@@ -6,9 +6,9 @@
 
 class Player : public Unit {
   private:
-    const int WEAPON_DAMAGE = 4;
-    const float WEAPON_COOLDOWN = 0.3;
-    const float WEAPON_PROJECTILE_SPEED = 3;
+    static constexpr int WEAPON_DAMAGE = 4;
+    static constexpr float WEAPON_COOLDOWN = 0.3;
+    static constexpr float WEAPON_PROJECTILE_SPEED = 3;
     float MAX_SPEED = 0.25;
     int MAX_HEALTH = 100;
     float acceleration_magnitude = 1;

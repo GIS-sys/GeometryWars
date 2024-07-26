@@ -22,8 +22,6 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 
 # TODO
 
-- add player's health
-
 - add new enemies
 
 - add powerups - player, enemies, projectiles etc.; player can store his own powerups, others are global and need method apply_if_applicable()

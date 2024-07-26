@@ -42,6 +42,11 @@ std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int 
         buffer.draw_line(x, y + cheight, x + cwidth, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'F') {
     } else if (symbol == 'G') {
+        buffer.draw_line(x + cwidth, y + cheight / 3, x + cwidth / 2, y, scaled_stroke, color, camera);
+        buffer.draw_line(x, y + cheight / 2, x + cwidth / 2, y, scaled_stroke, color, camera);
+        buffer.draw_line(x, y + cheight / 2, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x + cwidth, y + cheight / 2, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x + cwidth, y + cheight / 2, x + cwidth / 2, y + cheight / 2, scaled_stroke, color, camera);
     } else if (symbol == 'H') {
         buffer.draw_line(x, y, x, y + cheight, scaled_stroke, color, camera);
         buffer.draw_line(x + cwidth, y, x + cwidth, y + cheight, scaled_stroke, color, camera);
@@ -54,6 +59,10 @@ std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int 
         buffer.draw_line(x, y, x, y + cheight, scaled_stroke, color, camera);
         buffer.draw_line(x, y + cheight, x + cwidth, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'M') {
+        buffer.draw_line(x, y, x, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x, y, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x + cwidth, y, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x + cwidth, y, x + cwidth, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'N') {
     } else if (symbol == 'O') {
         buffer.draw_line(x + cwidth, y, x, y, scaled_stroke, color, camera);
@@ -76,6 +85,8 @@ std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int 
         buffer.draw_line(x + cwidth / 2, y, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'U') {
     } else if (symbol == 'V') {
+        buffer.draw_line(x, y, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x + cwidth, y, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'W') {
     } else if (symbol == 'X') {
         buffer.draw_line(x, y, x + cwidth, y + cheight, scaled_stroke, color, camera);
