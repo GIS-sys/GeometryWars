@@ -44,6 +44,16 @@ void GameBuffer::draw_line(int x1, int y1, int x2, int y2, int width, Color colo
     }
 }
 
+void GameBuffer::draw_circle(int cx, int cy, int radius, Color color, const Camera* camera) {
+    for (int dx = -radius; dx <= radius; ++dx) {
+        for (int dy = -radius; dy <= radius; ++dy) {
+            if (dx*dx+dy*dy<=radius*radius) {
+                set(cx + dx, cy + dy, color, camera);
+            }
+        }
+    }
+}
+
 void GameBuffer::draw_text(const std::string& text, int left, int top, int right, int bottom, Color color, const Camera* camera) {
     int total_height = Font::estimate_height(text);
     int total_width = Font::estimate_width(text);
