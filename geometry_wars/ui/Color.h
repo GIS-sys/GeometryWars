@@ -32,4 +32,20 @@ class Color {
     static Color LIGHT_GREEN() { return Color::from_rgb(32, 64, 32); }
     static Color YELLOW() { return Color::from_rgb(224, 224, 32); }
     static Color ORANGE() { return Color::from_rgb(255, 128, 32); }
+
+    Color& operator*=(float scale) {
+        int blue = color % 256;
+        color = color / 256;
+        int green = color % 256;
+        color = color / 256;
+        int red = color % 256;
+        color = Color::from_rgb(red * scale, green * scale, blue * scale).raw();
+        return *this;
+    }
 };
+
+inline Color operator*(const Color& color, float scale) {
+  Color result = color;
+  result *= scale;
+  return result;
+}

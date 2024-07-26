@@ -28,8 +28,6 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux. Engin
 
 # TODO
 
-- add new enemies
-
 - add new weapons
 
 
