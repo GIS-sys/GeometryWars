@@ -7,11 +7,13 @@
 
 class Enemy : public Unit {
   public:
-    int initial_health;
-    int health;
+    Color color;
+    int max_health;
     int bounty;
     float dps;
-    Enemy(float x, float y, int initial_health=10, int bounty=13, int dps=100) : Unit(x, y), initial_health(initial_health), health(initial_health), bounty(bounty), dps(dps) {}
+    float size;
+    int health;
+    Enemy(float x, float y, int max_health, int bounty, float dps, Color color, float size) : Unit(x, y), max_health(max_health), health(max_health), bounty(bounty), dps(dps), color(color), size(size) {}
     void hit(Projectile* projectile) { health -= projectile->damage; }
     bool is_dead() const { return health <= 0; }
 };
@@ -19,28 +21,40 @@ class Enemy : public Unit {
 
 class EnemyRectangle : public Enemy {
   private:
-    const int SIZE = 10;
+    const int BASE_MAX_HEALTH = 10;
+    const int BASE_BOUNTY = 10;
+    const int BASE_DPS = 10;
+    const Color BASE_COLOR = Color::RED();
+    const int BASE_SPEED = 10;
+    const int BASE_SIZE = 10;
+
   public:
-    EnemyRectangle(int x, int y) : Enemy(x, y) {}
+    EnemyRectangle(int x, int y) : Enemy(x, y, BASE_MAX_HEALTH, BASE_BOUNTY, BASE_DPS, BASE_COLOR, BASE_SIZE) { speed_magnitude = BASE_SPEED; }
     bool is_inside(float px, float py, int, int) override {
-        return x - SIZE <= px && px <= x + SIZE && y - SIZE <= py && py <= y + SIZE;
+        return x - size <= px && px <= x + size && y - size <= py && py <= y + size;
     }
     void draw(GameBuffer buffer, Camera* camera) override {
-        buffer.draw_rect(x-SIZE, y-SIZE, x+SIZE, y+SIZE, 150*256, camera);
+        buffer.draw_rect(x - size, y - size, x + size, y + size, color, camera);
     }
 };
 
 
 class EnemyCircle : public Enemy {
   private:
-    const int SIZE = 10;
+    const int BASE_MAX_HEALTH = 20;
+    const int BASE_BOUNTY = 10;
+    const int BASE_DPS = 10;
+    const Color BASE_COLOR = Color::GREEN();
+    const int BASE_SPEED = 10;
+    const int BASE_SIZE = 10;
+
   public:
-    EnemyCircle(int x, int y) : Enemy(x, y) {}
+    EnemyCircle(int x, int y) : Enemy(x, y, BASE_MAX_HEALTH, BASE_BOUNTY, BASE_DPS, BASE_COLOR, BASE_SIZE) { speed_magnitude = BASE_SPEED; }
     bool is_inside(float px, float py, int, int) override {
-        return (x - px) * (x - px) + (y - py) * (y - py) <= SIZE * SIZE;
+        return (x - px) * (x - px) + (y - py) * (y - py) <= size * size;
     }
     void draw(GameBuffer buffer, Camera* camera) override {
-        buffer.draw_circle(x, y, SIZE, 150*256, camera);
+        buffer.draw_circle(x, y, size, color, camera);
     }
 };
 
