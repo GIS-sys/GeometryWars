@@ -28,12 +28,14 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux. Engin
 
 # TODO
 
-- use Color instead of all colors in functions to allow for inverse color or transparent colors - TEST FOR ALPHA, ADD INVERSE, REPLACE EVERYWHERE FOR RGB
-
 - add new enemies
+
+- add new weapons
+
 
 - add powerups - player, enemies, projectiles etc.; player can store his own powerups, others are global and need method apply_if_applicable()
 
+- add color alpha and inverse
 
 - probably break down MainGameScene act into several methods
 
