@@ -4,6 +4,7 @@
 
 class Camera {
   public:
+    static constexpr float LAG = 30;
     int buffer_width = 0;
     int buffer_height = 0;
     float fov = 1;

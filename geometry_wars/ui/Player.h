@@ -9,7 +9,11 @@ class Player : public Unit {
     const int WEAPON_DAMAGE = 4;
     const float WEAPON_COOLDOWN = 0.3;
     const float WEAPON_PROJECTILE_SPEED = 3;
+    const float MAX_SPEED = 0.4;
+    float acceleration_magnitude = 2;
     float weapon_cooldown_rest = 0;
+    float speed_x = 0;
+    float speed_y = 0;
 
   public:
     Player() : Unit(0, 0) {}
@@ -23,4 +27,17 @@ class Player : public Unit {
     void draw(GameBuffer buffer, Camera* camera) {
         buffer.draw_line(x-10, y-10, x+10, y+10, 5, 150*256, camera);
     }
+    void move(std::pair<float, float> acceleration_dt) {
+        speed_x += acceleration_dt.first * acceleration_magnitude;
+        speed_y += acceleration_dt.second * acceleration_magnitude;
+        if (speed_x*speed_x + speed_y*speed_y >= MAX_SPEED*MAX_SPEED) {
+            auto new_speed = normalize_pair<float>({speed_x, speed_y});
+            speed_x = new_speed.first * MAX_SPEED;
+            speed_y = new_speed.second * MAX_SPEED;
+        }
+        x += speed_x;
+        y += speed_y;
+    }
+    float get_speed_x() const { return speed_x; }
+    float get_speed_y() const { return speed_y; }
 };

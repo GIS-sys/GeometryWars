@@ -99,7 +99,7 @@ GameScene::Type MainGameScene::act(float dt) {
     camera.buffer_width = prev_buffer_width;
     camera.buffer_height = prev_buffer_height;
     camera.fov = 0.5;
-    camera.center_on(player.x, player.y);
+    camera.center_on(player.x - Camera::LAG * player.get_speed_x(), player.y - Camera::LAG * player.get_speed_y());
     // exit to main menu
     if (engine_is_key_pressed(keys::K_ESCAPE)) {
         return GameScene::Type::main_menu;
