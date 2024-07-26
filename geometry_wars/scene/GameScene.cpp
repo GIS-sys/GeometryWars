@@ -1,6 +1,5 @@
 #include "GameScene.h"
 #include "geometry_wars/Engine.h"
-#include <iostream>
 
 
 GameScene::~GameScene() {}

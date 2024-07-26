@@ -4,9 +4,7 @@
 #include "geometry_wars/scene/MainGameScene.h"
 #include <stdlib.h>
 #include <memory.h>
-
 #include <stdio.h>
-#include <iostream>
 
 
 //  You are free to modify this file

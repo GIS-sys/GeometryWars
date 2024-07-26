@@ -2,7 +2,6 @@
 
 #include "geometry_wars/ui/Unit.h"
 #include "geometry_wars/Utils.h"
-#include <iostream>
 
 
 class Player : public Unit {
@@ -10,9 +9,9 @@ class Player : public Unit {
     static constexpr int WEAPON_DAMAGE = 4;
     static constexpr float WEAPON_COOLDOWN = 0.3;
     static constexpr float WEAPON_PROJECTILE_SPEED = 3;
-    float MAX_SPEED = 0.25;
+    float MAX_SPEED = 250;
     int MAX_HEALTH = 100;
-    float acceleration_magnitude = 1;
+    float acceleration_magnitude = 1000;
     float weapon_cooldown_rest = 0;
     float speed_x = 0;
     float speed_y = 0;
@@ -30,17 +29,16 @@ class Player : public Unit {
     void draw(GameBuffer buffer, Camera* camera) override {
         buffer.draw_circle(x, y, 10, Color::GREEN(), camera);
     }
-    void move(std::pair<float, float> acceleration_dt) override {
-        speed_x += acceleration_dt.first * acceleration_magnitude;
-        speed_y += acceleration_dt.second * acceleration_magnitude;
+    void move(std::pair<float, float> acceleration, float dt) override {
+        speed_x += acceleration.first * dt * acceleration_magnitude;
+        speed_y += acceleration.second * dt * acceleration_magnitude;
         if (speed_x*speed_x + speed_y*speed_y >= MAX_SPEED*MAX_SPEED) {
             auto new_speed = normalize_pair<float>({speed_x, speed_y});
             speed_x = new_speed.first * MAX_SPEED;
             speed_y = new_speed.second * MAX_SPEED;
         }
-        //std::cout << speed_x*speed_x+speed_y*speed_y << std::endl;
-        x += speed_x;
-        y += speed_y;
+        x += speed_x * dt;
+        y += speed_y * dt;
     }
     float get_speed_x() const { return speed_x; }
     float get_speed_y() const { return speed_y; }

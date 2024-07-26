@@ -1,7 +1,6 @@
 #include "GameBuffer.h"
 #include "geometry_wars/Utils.h"
 #include "geometry_wars/ui/Font.h"
-#include <iostream>
 
 
 void GameBuffer::memset(uint32_t value, size_t from, size_t to) {

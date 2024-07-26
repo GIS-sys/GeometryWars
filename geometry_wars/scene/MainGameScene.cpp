@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include "geometry_wars/Utils.h"
 #include <algorithm>
-#include <iostream>
 
 
 MainGameScene::~MainGameScene() {
@@ -61,23 +60,23 @@ GameScene::Type MainGameScene::act(float dt) {
         return GameScene::Type::none;
     }
     // move player 
-    std::pair<float, float> player_acceleration_dt;
-    if (engine_is_key_pressed(keys::K_LEFT)) player_acceleration_dt.first -= dt;
-    if (engine_is_key_pressed(keys::K_RIGHT)) player_acceleration_dt.first += dt;
-    if (engine_is_key_pressed(keys::K_UP)) player_acceleration_dt.second -= dt;
-    if (engine_is_key_pressed(keys::K_DOWN)) player_acceleration_dt.second += dt;
-    player.move(player_acceleration_dt);
+    std::pair<float, float> player_acceleration;
+    if (engine_is_key_pressed(keys::K_LEFT)) player_acceleration.first -= 1;
+    if (engine_is_key_pressed(keys::K_RIGHT)) player_acceleration.first += 1;
+    if (engine_is_key_pressed(keys::K_UP)) player_acceleration.second -= 1;
+    if (engine_is_key_pressed(keys::K_DOWN)) player_acceleration.second += 1;
+    player_acceleration = normalize_pair(player_acceleration);
+    player.move(player_acceleration, dt);
     // snap player inside battlefield
     player.set_position(battlefield.snap_inside(player.position()));
     // move enemies toward player 
     for (Enemy* enemy : enemies) {
         std::pair<float, float> enemy_acceleration = normalize_pair<float>({player.x - enemy->x, player.y - enemy->y});
-        std::pair<float, float> enemy_acceleration_dt = {enemy_acceleration.first * dt, enemy_acceleration.second * dt};
-        enemy->move(enemy_acceleration_dt);
+        enemy->move(enemy_acceleration, dt);
     }
     // move projectiles 
     for (Projectile* projectile : projectiles) {
-        projectile->move({dt * projectile->speed_x, dt * projectile->speed_y});
+        projectile->move({projectile->speed_x, projectile->speed_y}, dt);
     }
     // delete projectiles which killed enemy / hit borders 
     std::vector<bool> alive_projectiles = std::vector<bool>(projectiles.size(), true);
