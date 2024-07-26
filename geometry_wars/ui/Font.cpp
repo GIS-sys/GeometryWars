@@ -64,6 +64,9 @@ std::pair<int, int> Font::draw_char(GameBuffer& buffer, char symbol, int x, int 
         buffer.draw_line(x + cwidth, y, x + cwidth / 2, y + cheight, scaled_stroke, color, camera);
         buffer.draw_line(x + cwidth, y, x + cwidth, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'N') {
+        buffer.draw_line(x, y, x, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x, y, x + cwidth, y + cheight, scaled_stroke, color, camera);
+        buffer.draw_line(x + cwidth, y, x + cwidth, y + cheight, scaled_stroke, color, camera);
     } else if (symbol == 'O') {
         buffer.draw_line(x + cwidth, y, x, y, scaled_stroke, color, camera);
         buffer.draw_line(x, y, x, y + cheight, scaled_stroke, color, camera);

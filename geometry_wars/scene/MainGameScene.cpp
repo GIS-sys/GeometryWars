@@ -38,7 +38,7 @@ void MainGameScene::draw(GameBuffer buffer) {
     for (Projectile* unit : projectiles) unit->draw(buffer, &camera);
 
     if (is_game_over) {
-        game_over_label.text = "GAME OVER";
+        game_over_label.text = "GAME OVER - ENTER TO RESTART";
         game_over_current_score.text = "SCORE " + std::to_string(score_value);
         game_over_high_score.text = "HIGH SCORE " + std::to_string(high_score_value);
         game_over_label.draw(buffer, nullptr);
