@@ -42,6 +42,7 @@ class Player : public Unit {
     }
     float get_speed_x() const { return speed_x; }
     float get_speed_y() const { return speed_y; }
+    float get_speed_magnitude_fraction() const { return std::sqrt((speed_x*speed_x+speed_y*speed_y)) / MAX_SPEED; }
     float get_health() const { return health; }
     void update_health(float dh) {
         health += dh;

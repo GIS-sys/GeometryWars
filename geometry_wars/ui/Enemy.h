@@ -3,7 +3,7 @@
 #include "geometry_wars/ui/Battlefield.h"
 #include "geometry_wars/ui/Unit.h"
 #include "geometry_wars/ui/Projectile.h"
-#include <iostream>
+
 
 class Enemy : public Unit {
   public:
@@ -19,17 +19,22 @@ class Enemy : public Unit {
 };
 
 
+class EnemyCircle : public Enemy {
+    public:
+        EnemyCircle(int x, int y) : Enemy(x, y, 10, 10, 10, Color::BLUE(), 10) { speed_magnitude = 100; }
+        bool is_inside(float px, float py, int, int) override {
+            return (x - px) * (x - px) + (y - py) * (y - py) <= size * size;
+        }
+        void draw(GameBuffer buffer, Camera* camera) override {
+            buffer.draw_circle(x, y, size, color, camera);
+        }
+};
+
+
 class EnemyRectangle : public Enemy {
-  private:
-    const int BASE_MAX_HEALTH = 10;
-    const int BASE_BOUNTY = 10;
-    const int BASE_DPS = 10;
-    const Color BASE_COLOR = Color::RED();
-    const int BASE_SPEED = 10;
-    const int BASE_SIZE = 10;
 
   public:
-    EnemyRectangle(int x, int y) : Enemy(x, y, BASE_MAX_HEALTH, BASE_BOUNTY, BASE_DPS, BASE_COLOR, BASE_SIZE) { speed_magnitude = BASE_SPEED; }
+    EnemyRectangle(int x, int y) : Enemy(x, y, 20, 18, 20, Color::RED(), 20) { speed_magnitude = 150; }
     bool is_inside(float px, float py, int, int) override {
         return x - size <= px && px <= x + size && y - size <= py && py <= y + size;
     }
@@ -39,23 +44,18 @@ class EnemyRectangle : public Enemy {
 };
 
 
-class EnemyCircle : public Enemy {
-  private:
-    const int BASE_MAX_HEALTH = 20;
-    const int BASE_BOUNTY = 10;
-    const int BASE_DPS = 10;
-    const Color BASE_COLOR = Color::GREEN();
-    const int BASE_SPEED = 10;
-    const int BASE_SIZE = 10;
-
-  public:
-    EnemyCircle(int x, int y) : Enemy(x, y, BASE_MAX_HEALTH, BASE_BOUNTY, BASE_DPS, BASE_COLOR, BASE_SIZE) { speed_magnitude = BASE_SPEED; }
-    bool is_inside(float px, float py, int, int) override {
-        return (x - px) * (x - px) + (y - py) * (y - py) <= size * size;
-    }
-    void draw(GameBuffer buffer, Camera* camera) override {
-        buffer.draw_circle(x, y, size, color, camera);
-    }
+class EnemyTriangle : public Enemy {
+    public:
+        EnemyTriangle(int x, int y) : Enemy(x, y, 30, 24, 30, Color::GREEN(), 30) { speed_magnitude = 200; }
+        bool is_inside(float px, float py, int, int) override {
+            return (x - px) * (x - px) + (y - py) * (y - py) <= size * size;
+        }
+        void draw(GameBuffer buffer, Camera* camera) override {
+            const int STROKE = 4;
+            buffer.draw_line(x - size / 2, y + size / 2, x, y - size, STROKE, color, camera);
+            buffer.draw_line(x + size / 2, y + size / 2, x, y - size, STROKE, color, camera);
+            buffer.draw_line(x - size / 2, y + size / 2, x + size / 2, y + size / 2, STROKE, color, camera);
+        }
 };
 
 
@@ -72,8 +72,7 @@ class EnemySpawner {
         enemy_spawn_cooldown = 0;
     }
 
-    Enemy* spawn(float dt, int score, std::pair<float, float> player_position, Battlefield& battlefield) {
-        std::cout << "1" << std::endl;
+    Enemy* spawn(float dt, std::pair<float, float> player_position, Battlefield& battlefield) {
         enemy_spawn_cooldown -= dt;
         while (enemy_spawn_cooldown < 0) {
             enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
@@ -86,14 +85,15 @@ class EnemySpawner {
                 // enemy type
                 Enemy* new_enemy = nullptr;
                 float random_type = (std::rand() * 1.0 / RAND_MAX);
-                if (0 <= random_type && random_type <= 0.5) {
+                if (0 <= random_type && random_type < 0.3) {
                     new_enemy = new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second);
-                } else {
+                } else if (0.3 <= random_type && random_type < 0.6) {
                     new_enemy = new EnemyCircle(new_enemy_pos.first, new_enemy_pos.second);
+                } else {
+                    new_enemy = new EnemyTriangle(new_enemy_pos.first, new_enemy_pos.second);
                 }
                 // vary parameters
                 new_enemy->speed_magnitude *= (std::rand() * 2.0 / RAND_MAX);
-                std::cout << "2" << std::endl;
                 return new_enemy;
             }
         }

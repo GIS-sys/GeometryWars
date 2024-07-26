@@ -136,12 +136,12 @@ GameScene::Type MainGameScene::act(float dt) {
         }
     }
     // spawn new enemies
-    Enemy* new_enemy = enemy_spawner.spawn(dt, score_value, player.position(), battlefield);
+    Enemy* new_enemy = enemy_spawner.spawn(dt, player.position(), battlefield);
     if (new_enemy) enemies.push_back(new_enemy);
     // move camera 
     camera.buffer_width = prev_buffer_width;
     camera.buffer_height = prev_buffer_height;
-    camera.fov = 0.5;
+    camera.fov = 0.5 + player.get_speed_magnitude_fraction() / 20;
     camera.center_on(player.x - Camera::LAG * player.get_speed_x(), player.y - Camera::LAG * player.get_speed_y());
     // update health
     health_label.text = "HEALTH " + std::to_string((int)player.get_health());
