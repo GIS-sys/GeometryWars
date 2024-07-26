@@ -18,6 +18,6 @@ class MainMenuScene : public GameScene {
   public:
     ~MainMenuScene();
     MainMenuScene();
-    void draw(GameBuffer buffer);
-    GameScene::Type act(float dt);
+    void draw(GameBuffer buffer) override;
+    GameScene::Type act(float dt) override;
 };

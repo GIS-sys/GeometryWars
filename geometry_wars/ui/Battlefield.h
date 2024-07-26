@@ -10,7 +10,7 @@ class Battlefield : public GameObject {
     int height;
   public:
     Battlefield(int width, int height) : width(width), height(height) {}
-    bool is_inside(float x, float y, int, int) {
+    bool is_inside(float x, float y, int, int) override {
         return 0 <= x && x <= width && 0 <= y && y <= height;
     }
     std::pair<float, float> snap_inside(std::pair<float, float> original_pos) {
@@ -19,7 +19,7 @@ class Battlefield : public GameObject {
             (original_pos.second < 0) ? 0 : ((original_pos.second > height) ? height : original_pos.second)
         };
     }
-    void draw(GameBuffer buffer, Camera* camera) {
+    void draw(GameBuffer buffer, Camera* camera) override {
         buffer.draw_line(0, 0, width, 0, STROKE, 150*256, camera);
         buffer.draw_line(0, 0, 0, height, STROKE, 150*256, camera);
         buffer.draw_line(width, height, width, 0, STROKE, 150*256, camera);

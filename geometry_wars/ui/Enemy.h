@@ -18,10 +18,10 @@ class EnemyRectangle : public Enemy {
     const int SIZE = 10;
   public:
     EnemyRectangle(int x, int y) : Enemy(x, y) {}
-    bool is_inside(float px, float py, int, int) {
+    bool is_inside(float px, float py, int, int) override {
         return x - SIZE <= px && px <= x + SIZE && y - SIZE <= py && py <= y + SIZE;
     }
-    void draw(GameBuffer buffer, Camera* camera) {
+    void draw(GameBuffer buffer, Camera* camera) override {
         buffer.draw_line(x+SIZE, y-SIZE, x-SIZE, y+SIZE, 5, 150*256, camera);
     }
 };

@@ -31,6 +31,6 @@ class MainGameScene : public GameScene {
   public:
     ~MainGameScene();
     MainGameScene();
-    void draw(GameBuffer buffer);
-    Type act(float dt);
+    void draw(GameBuffer buffer) override;
+    Type act(float dt) override;
 };

@@ -17,7 +17,7 @@ class GOLabel : public GameObject {
 
     GOLabel(float left, float top, float width, float height, Color color) : left(left), top(top), width(width), height(height), color(color) {}
 
-    void draw(GameBuffer buffer, Camera*) {
+    void draw(GameBuffer buffer, Camera*) override {
         int x1 = left * buffer.width;
         int x2 = x1 + width * buffer.width;
         int y1 = top * buffer.height;

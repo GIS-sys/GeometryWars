@@ -9,8 +9,8 @@ class Player : public Unit {
     const int WEAPON_DAMAGE = 4;
     const float WEAPON_COOLDOWN = 0.3;
     const float WEAPON_PROJECTILE_SPEED = 3;
-    const float MAX_SPEED = 0.4;
-    float acceleration_magnitude = 2;
+    const float MAX_SPEED = 0.3;
+    float acceleration_magnitude = 1;
     float weapon_cooldown_rest = 0;
     float speed_x = 0;
     float speed_y = 0;
@@ -24,10 +24,10 @@ class Player : public Unit {
         auto [vx, vy] = normalize_pair<float>({target_x - x, target_y - y});
         return new Projectile(x, y, vx * WEAPON_PROJECTILE_SPEED, vy * WEAPON_PROJECTILE_SPEED, WEAPON_DAMAGE);
     }
-    void draw(GameBuffer buffer, Camera* camera) {
+    void draw(GameBuffer buffer, Camera* camera) override {
         buffer.draw_line(x-10, y-10, x+10, y+10, 5, 150*256, camera);
     }
-    void move(std::pair<float, float> acceleration_dt) {
+    void move(std::pair<float, float> acceleration_dt) override {
         speed_x += acceleration_dt.first * acceleration_magnitude;
         speed_y += acceleration_dt.second * acceleration_magnitude;
         if (speed_x*speed_x + speed_y*speed_y >= MAX_SPEED*MAX_SPEED) {
