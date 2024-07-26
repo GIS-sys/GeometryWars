@@ -2,6 +2,7 @@
 
 #include <string>
 #include "geometry_wars/ui/GameBuffer.h"
+#include "geometry_wars/ui/Camera.h"
 
 
 class Font {
@@ -15,6 +16,6 @@ class Font {
   public:
     static int estimate_height(const std::string& text);
     static int estimate_width(const std::string& text);
-    static void draw_text(GameBuffer& buffer, const std::string& text, int x, int y, float scale, Color color);
-    static std::pair<int, int> draw_char(GameBuffer& buffer, char symbol, int x, int y, float scale, Color color);
+    static void draw_text(GameBuffer& buffer, const std::string& text, int x, int y, float scale, Color color, const Camera* camera = nullptr);
+    static std::pair<int, int> draw_char(GameBuffer& buffer, char symbol, int x, int y, float scale, Color color, const Camera* camera = nullptr);
 };

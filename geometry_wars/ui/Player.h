@@ -21,6 +21,6 @@ class Player : public Unit {
         return new Projectile(x, y, vx * WEAPON_PROJECTILE_SPEED, vy * WEAPON_PROJECTILE_SPEED, WEAPON_DAMAGE);
     }
     void draw(GameBuffer buffer, Camera* camera) {
-        buffer.draw_line(x-10, y-10, x+10, y+10, 5, 150*256);
+        buffer.draw_line(x-10, y-10, x+10, y+10, 5, 150*256, camera);
     }
 };

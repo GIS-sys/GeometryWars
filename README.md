@@ -25,7 +25,9 @@ Based on template engine: https://github.com/imp5imp5/game_template_linux
 - use Color instead of all colors in functions to allow for inverse color or transparent colors - TEST FOR ALPHA, ADD INVERSE, REPLACE EVERYWHERE FOR RGB
 
 
-- allow to draw rotated and use camera (in gamebuffer methods)
+- allow to draw rotated
+
+- player funnier movement, camera lag behind player
 
 - add override everywhere
 

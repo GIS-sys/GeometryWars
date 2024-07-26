@@ -20,10 +20,10 @@ class Battlefield : public GameObject {
         };
     }
     void draw(GameBuffer buffer, Camera* camera) {
-        buffer.draw_line(0, 0, width, 0, STROKE, 150*256);
-        buffer.draw_line(0, 0, 0, height, STROKE, 150*256);
-        buffer.draw_line(width, height, width, 0, STROKE, 150*256);
-        buffer.draw_line(width, height, 0, height, STROKE, 150*256);
+        buffer.draw_line(0, 0, width, 0, STROKE, 150*256, camera);
+        buffer.draw_line(0, 0, 0, height, STROKE, 150*256, camera);
+        buffer.draw_line(width, height, width, 0, STROKE, 150*256, camera);
+        buffer.draw_line(width, height, 0, height, STROKE, 150*256, camera);
     }
     int get_width() const { return width; }
     int get_height() const { return height; }

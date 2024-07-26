@@ -6,12 +6,6 @@ Color::Color(uint32_t color) : color(color) {}
 
 Color::Color(uint32_t color, float alpha) : color(color), alpha(alpha) {}
 
-// void Color::apply(GameBuffer* buffer, int x, int y) const {
-//     Color current_color = Color(buffer.get(x, y));
-//     Color result_color = mix(*this, current_color);
-//     buffer->set(x, y, result_color.color);
-// }
-
 uint32_t Color::raw() const { return color; }
 
 Color Color::mix(Color a, Color b) {
