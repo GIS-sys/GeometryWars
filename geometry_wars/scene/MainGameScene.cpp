@@ -70,10 +70,21 @@ GameScene::Type MainGameScene::act(float dt) {
         if (enemy->is_dead()) {
             score_value += enemy->bounty;
             score_label.text = "SCORE " + std::to_string(score_value);
-            delete enemy;
         }
     }
-    enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Enemy* e) { return e->is_dead(); }), end(enemies));
+    enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Enemy* e) {
+        if (e->is_dead()) {
+            delete e;
+            return true;
+        }
+        return false;
+    }), end(enemies));
+    // collide enemies with player
+    for (Enemy* enemy : enemies) {
+        if (enemy->is_inside(player.x, player.y, prev_buffer_width, prev_buffer_height)) {
+            player.update_health(-enemy->dps * dt);
+        }
+    }
     // fire new projectiles 
     if (!player.is_ready_to_shoot()) {
         player.reduce_shooting_cooldown(dt);
@@ -102,7 +113,7 @@ GameScene::Type MainGameScene::act(float dt) {
     camera.fov = 0.5;
     camera.center_on(player.x - Camera::LAG * player.get_speed_x(), player.y - Camera::LAG * player.get_speed_y());
     // update health
-    health_label.text = "HEALTH " + std::to_string(player.health);
+    health_label.text = "HEALTH " + std::to_string((int)player.get_health());
     // exit to main menu
     if (engine_is_key_pressed(keys::K_ESCAPE)) {
         return GameScene::Type::main_menu;

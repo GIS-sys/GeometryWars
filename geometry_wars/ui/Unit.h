@@ -7,7 +7,7 @@ class Unit : public GameObject {
   public:
     float x = 0;
     float y = 0;
-    int speed_magnitude = 100;
+    float speed_magnitude = 100;
     Unit(int x, int y) : x(x), y(y) {}
     virtual void move(std::pair<float, float> acceleration_dt) {
         x += acceleration_dt.first * speed_magnitude;
