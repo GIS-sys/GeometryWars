@@ -54,6 +54,14 @@ void GameBuffer::draw_circle(int cx, int cy, int radius, Color color, const Came
     }
 }
 
+void GameBuffer::draw_rect(int x1, int y1, int x2, int y2, Color color, const Camera* camera) {
+    for (int x = x1; x <= x2; ++x) {
+        for (int y = y1; y <= y2; ++y) {
+            set(x, y, color, camera);
+        }
+    }
+}
+
 void GameBuffer::draw_text(const std::string& text, int left, int top, int right, int bottom, Color color, const Camera* camera) {
     int total_height = Font::estimate_height(text);
     int total_width = Font::estimate_width(text);

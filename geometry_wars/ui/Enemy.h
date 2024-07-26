@@ -22,6 +22,6 @@ class EnemyRectangle : public Enemy {
         return x - SIZE <= px && px <= x + SIZE && y - SIZE <= py && py <= y + SIZE;
     }
     void draw(GameBuffer buffer, Camera* camera) override {
-        buffer.draw_line(x+SIZE, y-SIZE, x-SIZE, y+SIZE, 5, 150*256, camera);
+        buffer.draw_rect(x-SIZE, y-SIZE, x+SIZE, y+SIZE, 150*256, camera);
     }
 };
