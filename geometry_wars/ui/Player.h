@@ -2,6 +2,7 @@
 
 #include "geometry_wars/ui/Unit.h"
 #include "geometry_wars/Utils.h"
+#include <iostream>
 
 
 class Player : public Unit {
@@ -27,7 +28,7 @@ class Player : public Unit {
         return new Projectile(x, y, vx * WEAPON_PROJECTILE_SPEED, vy * WEAPON_PROJECTILE_SPEED, WEAPON_DAMAGE);
     }
     void draw(GameBuffer buffer, Camera* camera) override {
-        buffer.draw_circle(x, y, 10, 150*256, camera);
+        buffer.draw_circle(x, y, 10, Color::GREEN(), camera);
     }
     void move(std::pair<float, float> acceleration_dt) override {
         speed_x += acceleration_dt.first * acceleration_magnitude;
@@ -37,6 +38,7 @@ class Player : public Unit {
             speed_x = new_speed.first * MAX_SPEED;
             speed_y = new_speed.second * MAX_SPEED;
         }
+        //std::cout << speed_x*speed_x+speed_y*speed_y << std::endl;
         x += speed_x;
         y += speed_y;
     }

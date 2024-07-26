@@ -5,11 +5,13 @@
 
 class Projectile : public Unit {
   public:
-    int damage;
+    Color color;
+    float radius;
     float speed_x;
     float speed_y;
-    Projectile(float x, float y, float vx, float vy, int damage) : Unit(x, y), speed_x(vx), speed_y(vy), damage(damage) {}
+    int damage;
+    Projectile(float x, float y, float vx, float vy, int damage, float radius = 5, Color color = Color::WHITE()) : Unit(x, y), speed_x(vx), speed_y(vy), damage(damage), radius(radius), color(color) {}
     void draw(GameBuffer buffer, Camera* camera) override {
-        buffer.draw_line(x-5, y, x+5, y, 5, 255, camera);
+        buffer.draw_circle(x, y, radius, color, camera);
     }
 };

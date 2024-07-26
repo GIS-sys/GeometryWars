@@ -24,7 +24,7 @@ A simple version of a popular game
 
 # Credits
 
-Based on template engine: https://github.com/imp5imp5/game_template_linux
+Based on template engine: https://github.com/imp5imp5/game_template_linux. Engine.cpp and Engine.h are placed in geometry_wars/ folder as they were
 
 # TODO
 

@@ -8,8 +8,8 @@
 
 
 MainMenuScene::MainMenuScene() {
-    objects.push_back(new GOButton(0.1, 0.25, 0.8, 0.2, "START", 200, [this](){ this->start(); }));
-    objects.push_back(new GOButton(0.1, 0.55, 0.8, 0.2, "EXIT", 200*256*256, [this](){ this->exit(); }));
+    objects.push_back(new GOButton(0.1, 0.25, 0.8, 0.2, "START", Color::WHITE(), [this](){ this->start(); }));
+    objects.push_back(new GOButton(0.1, 0.55, 0.8, 0.2, "EXIT", Color::RED(), [this](){ this->exit(); }));
 }
 
 MainMenuScene::~MainMenuScene() {

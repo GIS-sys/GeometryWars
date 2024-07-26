@@ -10,12 +10,12 @@ MainGameScene::~MainGameScene() {
     for (Projectile* unit : projectiles) delete unit;
 }
 
-MainGameScene::MainGameScene() : battlefield(600, 400) {
+MainGameScene::MainGameScene() : battlefield(1200, 800) {
 }
 
 void MainGameScene::restart() {
     camera = Camera();
-    battlefield = Battlefield(600, 400);
+    battlefield = Battlefield(1200, 800);
     player = Player();
     for (Enemy* unit : enemies) delete unit;
     enemies.clear();

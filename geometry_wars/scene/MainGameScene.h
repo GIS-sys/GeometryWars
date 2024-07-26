@@ -1,6 +1,7 @@
 #pragma once
 #include "geometry_wars/scene/GameScene.h"
 #include "geometry_wars/ui/Camera.h"
+#include "geometry_wars/ui/Color.h"
 #include "geometry_wars/ui/Battlefield.h"
 #include "geometry_wars/ui/GOLabel.h"
 #include "geometry_wars/ui/Projectile.h"
@@ -18,12 +19,12 @@ class MainGameScene : public GameScene {
     Player player;
     std::vector<Enemy*> enemies;
     std::vector<Projectile*> projectiles;
-    GOLabel health_label = GOLabel(0.05, 0.05, 0.3, 0.1, (256*256+256+1) * 200);
-    GOLabel score_label = GOLabel(0.65, 0.05, 0.3, 0.1, (256*256+256+1) * 200);
+    GOLabel health_label = GOLabel(0.05, 0.05, 0.3, 0.1, Color::ORANGE());
+    GOLabel score_label = GOLabel(0.65, 0.05, 0.3, 0.1, Color::YELLOW());
 
-    GOLabel game_over_label = GOLabel(0.05, 0.3, 0.9, 0.1, 200*256*256+50*256+30);
-    GOLabel game_over_current_score = GOLabel(0.35, 0.45, 0.3, 0.1, (256*256+256+1) * 200);
-    GOLabel game_over_high_score = GOLabel(0.35, 0.6, 0.3, 0.1, (256*256+256+1) * 200);
+    GOLabel game_over_label = GOLabel(0.05, 0.3, 0.9, 0.1, Color::RED());
+    GOLabel game_over_current_score = GOLabel(0.25, 0.45, 0.5, 0.1, Color::WHITE());
+    GOLabel game_over_high_score = GOLabel(0.25, 0.6, 0.5, 0.1, Color::WHITE());
 
     int score_value = 0;
     int high_score_value = 0;
