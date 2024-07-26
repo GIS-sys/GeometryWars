@@ -33,6 +33,7 @@ void MainGameScene::draw(GameBuffer buffer) {
     player.draw(buffer, &camera);
     score_label.draw(buffer, nullptr);
     health_label.draw(buffer, nullptr);
+    high_score_label.draw(buffer, nullptr);
     for (Enemy* unit : enemies) unit->draw(buffer, &camera);
     for (Projectile* unit : projectiles) unit->draw(buffer, &camera);
 
@@ -105,6 +106,7 @@ GameScene::Type MainGameScene::act(float dt) {
         }
     }
     score_label.text = "SCORE " + std::to_string(score_value);
+    high_score_label.text = "HIGHSCORE " + std::to_string(high_score_value);
     enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Enemy* e) {
         if (e->is_dead()) {
             delete e;
