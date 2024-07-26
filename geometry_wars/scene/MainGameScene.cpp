@@ -10,7 +10,7 @@ MainGameScene::~MainGameScene() {
     for (Projectile* unit : projectiles) delete unit;
 }
 
-MainGameScene::MainGameScene() {
+MainGameScene::MainGameScene() : battlefield(600, 400) {
     score_label.text = "SCORE 0";
 }
 
@@ -25,24 +25,24 @@ void MainGameScene::draw(GameBuffer buffer) {
 }
 
 GameScene::Type MainGameScene::act(float dt) {
-    // move player TODO
+    // move player 
     std::pair<float, float> player_acceleration_dt;
     if (engine_is_key_pressed(keys::K_LEFT)) player_acceleration_dt.first -= dt;
     if (engine_is_key_pressed(keys::K_RIGHT)) player_acceleration_dt.first += dt;
     if (engine_is_key_pressed(keys::K_UP)) player_acceleration_dt.second -= dt;
     if (engine_is_key_pressed(keys::K_DOWN)) player_acceleration_dt.second += dt;
     player.move(player_acceleration_dt);
-    // move enemies toward player TODO
+    // move enemies toward player 
     for (Enemy* enemy : enemies) {
         std::pair<float, float> enemy_acceleration = normalize_pair<float>({player.x - enemy->x, player.y - enemy->y});
         std::pair<float, float> enemy_acceleration_dt = {enemy_acceleration.first * dt, enemy_acceleration.second * dt};
         enemy->move(enemy_acceleration_dt);
     }
-    // move projectiles TODO
+    // move projectiles 
     for (Projectile* projectile : projectiles) {
         projectile->move({dt * projectile->speed_x, dt * projectile->speed_y});
     }
-    // delete projectiles which killed enemy / hit borders TODO
+    // delete projectiles which killed enemy / hit borders 
     std::vector<bool> alive_projectiles = std::vector<bool>(projectiles.size(), true);
     for (int i = 0; i < projectiles.size(); ++i) {
         Projectile* projectile = projectiles[i];
@@ -71,7 +71,7 @@ GameScene::Type MainGameScene::act(float dt) {
         }
     }
     enemies.erase(std::remove_if(begin(enemies), end(enemies), [](Enemy* e) { return e->is_dead(); }), end(enemies));
-    // fire new projectiles TODO
+    // fire new projectiles 
     if (!player.is_ready_to_shoot()) {
         player.reduce_shooting_cooldown(dt);
     } else {
@@ -80,7 +80,7 @@ GameScene::Type MainGameScene::act(float dt) {
             projectiles.push_back(player.shoot_projectile(engine_get_cursor_x(), engine_get_cursor_y()));
         }
     }
-    // spawn new enemies TODO
+    // spawn new enemies 
     enemy_spawn_cooldown -= dt;
     while (enemy_spawn_cooldown < 0) {
         enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
@@ -92,7 +92,7 @@ GameScene::Type MainGameScene::act(float dt) {
             enemies.push_back(new EnemyRectangle(new_enemy_pos.first, new_enemy_pos.second));
         }
     }
-    // move camera TODO
+    // move camera 
     camera.buffer_width = prev_buffer_width;
     camera.buffer_height = prev_buffer_height;
     camera.fov = 0.5;
