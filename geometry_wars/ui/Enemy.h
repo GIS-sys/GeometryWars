@@ -3,7 +3,7 @@
 #include "geometry_wars/ui/Battlefield.h"
 #include "geometry_wars/ui/Unit.h"
 #include "geometry_wars/ui/Projectile.h"
-
+#include <iostream>
 
 class Enemy : public Unit {
   public:
@@ -73,6 +73,7 @@ class EnemySpawner {
     }
 
     Enemy* spawn(float dt, int score, std::pair<float, float> player_position, Battlefield& battlefield) {
+        std::cout << "1" << std::endl;
         enemy_spawn_cooldown -= dt;
         while (enemy_spawn_cooldown < 0) {
             enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
@@ -92,6 +93,7 @@ class EnemySpawner {
                 }
                 // vary parameters
                 new_enemy->speed_magnitude *= (std::rand() * 2.0 / RAND_MAX);
+                std::cout << "2" << std::endl;
                 return new_enemy;
             }
         }
