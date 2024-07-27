@@ -142,7 +142,7 @@ GameScene::Type MainGameScene::act(float dt) {
     // move camera 
     camera.buffer_width = prev_buffer_width;
     camera.buffer_height = prev_buffer_height;
-    camera.fov = 0.5 + player.get_speed_magnitude_fraction() / 20;
+    camera.fov = 0.5 + enemy_spawner.get_already_spawned() / 200.0;
     camera.center_on(player.x - Camera::LAG * player.get_speed_x(), player.y - Camera::LAG * player.get_speed_y());
     // update health
     health_label.text = "HEALTH " + std::to_string((int)player.get_health());

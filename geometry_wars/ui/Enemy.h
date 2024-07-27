@@ -63,14 +63,22 @@ class EnemyTriangle : public Enemy {
 class EnemySpawner {
   private:
     // spawner - have no time to move to separate class
-    const float ENEMY_SPAWN_PROBABILITY = 0.2;
-    const float ENEMY_SPAWN_COOLDOWN = 0.2;
     const int MIN_ENEMY_SPAWN_DISTANCE = 100;
+    const float ENEMY_SPAWN_PROBABILITY_RATE = 0.99;
+    const float ENEMY_SPAWN_COOLDOWN_MAX_RATE = 0.99;
+    const float BASE_ENEMY_SPAWN_PROBABILITY = 0.2;
+    const float BASE_ENEMY_SPAWN_COOLDOWN_MAX = 0.2;
+    float enemy_spawn_probability = BASE_ENEMY_SPAWN_PROBABILITY;
+    float enemy_spawn_cooldown_max = BASE_ENEMY_SPAWN_COOLDOWN_MAX;
     float enemy_spawn_cooldown = 0;
     int already_spawned = 0;
 
   public:
+    int get_already_spawned() const { return already_spawned; }
+
     void restart() {
+        enemy_spawn_probability = BASE_ENEMY_SPAWN_PROBABILITY;
+        enemy_spawn_cooldown_max = BASE_ENEMY_SPAWN_COOLDOWN_MAX;
         enemy_spawn_cooldown = 0;
         already_spawned = 0;
     }
@@ -78,10 +86,12 @@ class EnemySpawner {
     Enemy* spawn(float dt, std::pair<float, float> player_position, Battlefield& battlefield) {
         enemy_spawn_cooldown -= dt;
         while (enemy_spawn_cooldown < 0) {
-            enemy_spawn_cooldown += ENEMY_SPAWN_COOLDOWN;
-            if (std::rand() * 1.0 / RAND_MAX < ENEMY_SPAWN_PROBABILITY) {
+            enemy_spawn_cooldown += enemy_spawn_cooldown_max;
+            if (std::rand() * 1.0 / RAND_MAX < enemy_spawn_probability) {
                 // spawned
                 already_spawned += 1;
+                enemy_spawn_probability = 1 - (1 - enemy_spawn_probability) * ENEMY_SPAWN_PROBABILITY_RATE;
+                enemy_spawn_cooldown_max *= ENEMY_SPAWN_COOLDOWN_MAX_RATE;
                 // position
                 std::pair<float, float> new_enemy_pos = player_position;
                 while (distance(new_enemy_pos, player_position) < MIN_ENEMY_SPAWN_DISTANCE) {

@@ -9,7 +9,7 @@ class Player : public Unit {
     static constexpr int WEAPON_DAMAGE = 4;
     static constexpr int WEAPON_SCORE_PER_AMOUNT = 10;
     static constexpr float WEAPON_COOLDOWN = 0.3;
-    static constexpr float WEAPON_PROJECTILE_SPEED = 3;
+    static constexpr float WEAPON_PROJECTILE_SPEED = 2;
     float MAX_SPEED = 250;
     int MAX_HEALTH = 100;
     float acceleration_magnitude = 1000;
