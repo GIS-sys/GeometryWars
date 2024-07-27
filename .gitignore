@@ -39,3 +39,6 @@
 
 # build files
 build/**
+
+# EXCEPT ELF FILE - required by task to push it, even though I would not do that
+!build/game
